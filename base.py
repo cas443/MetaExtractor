@@ -8,9 +8,9 @@ def print_nicely(thingToPrint):
 
 
 #location = "/home/jo/Desktop/basic_maths.jpg"
-location = "/home/jo/Desktop/pasta_cooked.jpg"
+#location = "/home/jo/Desktop/pasta_cooked.jpg"
 #location = "/home/jo/Desktop/image.jpg"
-#location = "/home/jo/Desktop/villa1.JPG"
+location = "/home/jo/Desktop/villa1.JPG"
 
 #metadata_regex_ord = r"(?<=\\[0-9A-Za-z]{3})([A-Za-z .:\-\/]{3,150}|[0-9]{1,4}:[0-9]{1,4}:[0-9]{1,4})"
 metadata_regex_ord = r"(?<=\\x[0-9A-Za-z]{2})([A-Za-z0-9 ]{1}[A-Za-z0-9 .:#-/]{3,150})(?=\\x)"
@@ -26,6 +26,8 @@ metadata_ord = []
 metadata_xml = []
 
 #print(imgdata[30000:60000])
+
+print("[+] METADATA FROM FILE: ", re.search(r"(?:.*/)(.*)(?=)", location).group(1))
 
 #FINDING ORDINARY METADATA IN IMAGE
 if re.findall(metadata_regex_ord, imgdata):
