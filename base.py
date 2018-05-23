@@ -1,14 +1,17 @@
 import xml_meta_handler, ord_meta_handler
 import re
 from tkinter import *
+from tkinter.filedialog import askopenfilename
 from PIL import Image, ImageTk
 
-#location = askopenfilename()
+# location = askopenfilename()
+# pathfile = str(location)
+
 
 #location = "/home/jo/Desktop/basic_maths.jpg"
-#location = "/home/jo/Desktop/pasta_cooked.jpg"
+location = "/home/jo/Desktop/pasta_cooked.jpg"
 #location = "/home/jo/Desktop/image.jpg"
-location = "/home/jo/Desktop/villa1.JPG"
+#location = "/home/jo/Desktop/villa1.JPG"
 #location = "/home/jo/Desktop/510222832.jpg"
 
 file = open(location, "rb")
@@ -19,7 +22,7 @@ imgdata = str(imgdata)
 
 #print(imgdata[:50000])
 
-filename = re.search(r"(?:.*/)(.*)(?=)", imgdata).group(1)
+filename = re.search(r"(?:.*/)(.*)(?=)", location).group(1)
 print("[+] METADATA FROM FILE: ", filename, location)
 
 metadata_ord = ord_meta_handler.handle_meta(imgdata)
@@ -49,12 +52,12 @@ text1 = Text(master, height=30, width=80)
 scroll = Scrollbar(master, command=text1.yview)
 image = Image.open(location)
 image = image.resize((300,250), Image.ANTIALIAS)
-image = ImageTk.PhotoImage(image)
+i = ImageTk.PhotoImage(image)
 
 
 
 text0.insert(END, "\n")
-text0.image_create(END, image=image)
+text0.image_create(END, image=i)
 text0.pack(side=LEFT)
 
 text1.pack(side=LEFT, fill=Y)
