@@ -1,9 +1,11 @@
 import xml_meta_handler, ord_meta_handler
 import re
+import tkinter as tk
+from tkinter.filedialog import askopenfilename
 
+location = askopenfilename()
 
-
-location = "/home/jo/Desktop/basic_maths.jpg"
+#location = "/home/jo/Desktop/basic_maths.jpg"
 #location = "/home/jo/Desktop/pasta_cooked.jpg"
 #location = "/home/jo/Desktop/image.jpg"
 #location = "/home/jo/Desktop/villa1.JPG"
@@ -31,8 +33,6 @@ for i in metadata_ord:
 for key, value in metadata_xml.items():
     if value is not "0" and key is not "WebStatement":
         print(key, " ", value)
-
-
 
 
 
