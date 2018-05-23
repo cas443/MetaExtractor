@@ -16,7 +16,7 @@ def handle_xml_meta(xml): #passed in a list of matches that are/should be xml st
         gps_timestamp_regex = r"(?:exif:)([A-Za-z0-9]+)(?:>)([0-9. :]+)(?:</)"
 
         for j in re.findall(parser_regex, i):
-            if j not in dupes:
+            if j not in dupes and "" not in j:
                 meta_touples.update({j[0]:j[1]})
                 dupes.append(j)
 
