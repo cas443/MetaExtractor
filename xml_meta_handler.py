@@ -1,14 +1,17 @@
 import re
 
 
-def handle_xml_meta(xml): #passed in a list of matches that are/should be xml strings
+def handle_meta(imgdata): #passed in a list of matches that are/should be xml strings
     meta_touples = {"": ""}
     dupes = []
+    metadata_xml = []
 
-    for i in xml:
-        #parser_regex = r"(?:.*?:)(.*?=\".*?\")"
-        #parser_regex = r"(?:.*?:)(.*?)(?:=\")(.*?)(?:\")" # dictionary
-        #parser_regex = r"(?:.*?:.*?:|:.*?:|.*?:)(.*?)(?:=\")(.*?)(?:\")" # dictionary
+    # FINDING DATA FROM XML CONTAINED WITHIN THE IMAGE
+    if re.findall(r"(<\?xpa.*meta>)", imgdata):
+        for i in re.findall(r"(<\?xpa.*meta>)", imgdata):
+            metadata_xml.append(i)
+
+    for i in metadata_xml:
         parser_regex = r"(?::)(\w+)(?:=\")(.*?)(?=\")" # dictionary
 
         between_tags = r"(?:>)(\w+.*?)(?:<)"
