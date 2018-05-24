@@ -9,8 +9,8 @@ from PIL import Image, ImageTk
 
 #location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg")])
 
-location = "/home/jo/Desktop/basic_maths.jpg"
-#location = "/home/jo/Desktop/pasta_cooked.jpg"
+#location = "/home/jo/Desktop/basic_maths.jpg"
+location = "/home/jo/Desktop/pasta_cooked.jpg"
 #location = "/home/jo/Desktop/image.jpg"
 #location = "/home/jo/Desktop/villa1.JPG"
 #location = "/home/jo/Desktop/510222832.jpg"
@@ -35,17 +35,24 @@ print(type(metadata_ord), type(metadata_xml))
 all_meta = ""
 
 
+def populate(frame):
+    item = ""
+    xml_counter = 0
+    #PRINT XML METADATA
+    for key, value in metadata_xml.items():
+        if value is not "0" and key is not "WebStatement":
+            item = key + ":\t " + value + "\n"
+            row = xml_counter
+            #Label(frame, text=item,  width=3, borderwidth="1", relief="solid").grid(row=row, column=0)
+            Label(frame, text=item).grid(row=row, column=0, sticky="w")
+            xml_counter += 1
 
-#PRINT XML METADATA
-for key, value in metadata_xml.items():
-    if value is not "0" and key is not "WebStatement":
-        all_meta += key + ":\t " + value + "\n"
-        #print(key, " ", value)
-
-#PRINT ORDINARY METADATA
-for i in metadata_ord:
-    all_meta += i + "\n"
-    #print(i)
+    #PRINT ORDINARY METADATA
+    for i in metadata_ord:
+        item = i + "\n"
+        row = metadata_ord.index(i)
+        #Label(frame, text=item, width=3, borderwidth="1", relief="solid").grid(row=row, column=0)
+        Label(frame, text=item).grid(row=row, column=0, sticky="w")
 
 
 master = Tk()
@@ -65,7 +72,7 @@ imageEx = ImageTk.PhotoImage(image, master=master)
 Label(left, image=imageEx).grid(row=2, column=0, padx=10, pady=15)
 
 #Right Frame and its contents
-right = Frame(master, width=200, height = 600, bg="white", highlightthickness=0, highlightbackground="white")
+right = Frame(master, width=400, height = 700, bg="white", highlightthickness=0, highlightbackground="white")
 right.grid(row=0, column=1, padx=10, pady=2, sticky=N+S)
 
 canvas = Canvas(right, borderwidth=0, background="#ffffff")
@@ -76,7 +83,9 @@ canvas.configure(yscrollcommand=vsb.set)
 vsb.pack(side="right", fill="y")
 canvas.pack(side="left", fill="both", expand=True)
 canvas.create_window((4,4), window=innerRight, anchor="nw")
-Label(innerRight, text=all_meta).grid(row=0, column=0)
+
+populate(innerRight)
+#Label(innerRight, text=all_meta).grid(row=0, column=0)
 
 
 # text1 = Listbox(right, height=30, width=80, text=all_meta, bg="white")
