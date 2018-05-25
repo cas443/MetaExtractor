@@ -86,8 +86,18 @@ intro.grid(row=0, column=0, padx=10, pady=20)
 #-----------
 meta_table = Frame(right, bg="#a5d6a7", highlightthickness=0, highlightbackground="#a5d6a7")
 meta_table.grid(row=1, column=0, padx=10, pady=2, sticky=N+S)
+# scroll = Scrollbar(meta_table, orient="vertical", command=meta_table.yview)
+# meta_table.configure(yscrollcommand=scroll.set)
+#
+# meta_table.pack(side="left")
+# #meta_table.create_window((0,0), window=meta_table, anchor="nw")
+# scroll.pack(side="right",fill="y")
+# meta_table.pack(side="left")
+
+
+#this is only loking at xml meta and 0s aren't discounted
 r = 1
-c=0
+c = 0
 for key, value in metadata_xml.items():
     c = c % 2
     Label(meta_table, text=key, borderwidth=1, padx=0, bg="#a5d6a7").grid(row=r, column=c, sticky=W)
