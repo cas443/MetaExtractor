@@ -3,11 +3,16 @@ import re
 from tkinter import *
 import tkinter.ttk as ttk
 from tkinter import Tk
+from tkinter import messagebox
 from tkinter.filedialog import askopenfilename
 from PIL import Image, ImageTk
 
 
-#location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg")])
+#location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")] )
+#
+# if ".jpg" not in location or ".JPG" not in location:
+#     messagebox.showerror("Error", "Invalid file chosen.")
+
 
 #location = "/home/jo/Desktop/basic_maths.jpg"
 location = "/home/jo/Desktop/pasta_cooked.jpg"
@@ -34,24 +39,16 @@ print(type(metadata_ord), type(metadata_xml))
 
 all_meta = ""
 
+#PRINT XML METADATA
+for key, value in metadata_xml.items():
+    if value is not "0" and key is not "WebStatement":
+        item = key + ":\t " + value + "\n"
+        all_meta += item
 
-def populate(frame):
-    item = ""
-    row = 0
-    #PRINT XML METADATA
-    for key, value in metadata_xml.items():
-        if value is not "0" and key is not "WebStatement":
-            item = key + ":\t " + value + "\n"
-            #Label(frame, text=item,  width=3, borderwidth="1", relief="solid").grid(row=row, column=0)
-            Label(frame, text=item).grid(row=row, column=0, sticky="w")
-            row += 1
-
-    #PRINT ORDINARY METADATA
-    for i in metadata_ord:
-        item = i + "\n"
-        #Label(frame, text=item, width=3, borderwidth="1", relief="solid").grid(row=row, column=0)
-        Label(frame, text=item).grid(row=row, column=0, sticky="w")
-        row += 1
+#PRINT ORDINARY METADATA
+for i in metadata_ord:
+    item = i + "\n"
+    all_meta += item
 
 
 master = Tk()
@@ -74,17 +71,13 @@ Label(left, image=imageEx).grid(row=2, column=0, padx=10, pady=15)
 right = Frame(master,  bg="white", highlightthickness=0, highlightbackground="white")
 right.grid(row=0, column=1, padx=10, pady=2, sticky=N+S)
 
-canvas = Canvas(right, borderwidth=0, background="#ffffff")
-innerRight = Frame(canvas, background="#ffffff")
-vsb = Scrollbar(right, orient="vertical", command=canvas.yview) #attached to right, not inner right !
-canvas.configure(yscrollcommand=vsb.set)
-
-vsb.pack(side="right", fill="y")
-canvas.create_window((4,4), window=innerRight, anchor="nw", height=700, width=800)
-canvas.pack(side="left", fill="both", expand=True)
-
-populate(innerRight)
-
+text1 = Text(right, height=30, width=80)
+scroll = Scrollbar(right, command=text1.yview)
+text1.config(yscrollcommand=scroll.set)
+text1.insert(END, all_meta)
+text1.pack(side=LEFT, fill=Y)
+scroll.config(command=text1.yview)
+scroll.pack(side=RIGHT, fill=Y)
 
 
 master.mainloop()
