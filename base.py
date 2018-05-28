@@ -15,13 +15,13 @@ from PIL import Image, ImageTk
 
 
 #location = "/home/jo/Desktop/MetaImages/basic_maths.jpg"
-#location = "/home/jo/Desktop/MetaImages/pasta_cooked.jpg"
+location = "/home/jo/Desktop/MetaImages/pasta_cooked.jpg"
 #location = "/home/jo/Desktop/MetaImages/image.jpg"
 #location = "/home/jo/Desktop/MetaImages/villa1.JPG"
 #location = "/home/jo/Desktop/MetaImages/510222832.jpg"
 #location = "/home/jo/Desktop/MetaImages/Apple iPhone 4S.jpg"
 
-location = "/home/jo/Pictures/IMG_20170617_161233.jpg"
+#location = "/home/jo/Pictures/IMG_20170617_161233.jpg"
 
 file = open(location, "rb")
 imgdata = file.read()
@@ -56,9 +56,11 @@ for i in metadata_ord:
 master = Tk()
 master.title("MetaEx: Image Metadata Extraction Tool")
 master.configure(background="#a5d6a7")
+master.pack_propagate(0)
+master.geometry('1120x600')
 
 #----LEFT----
-left = Frame(master, width=200, height=700, highlightthickness=0, bg="#a5d6a7")
+left = Frame(master, width=200, height=500, highlightthickness=0, bg="#a5d6a7")
 left.grid(row=0, column=0, padx=10, pady=2, sticky=N+S)
 
 logo = Label(left, text="MetaEx", fg="#00695C", bg="#a5d6a7", font="Verdana 30 bold", underline=True)
@@ -69,7 +71,7 @@ image = image.resize((300,250), Image.ANTIALIAS)
 imageEx = ImageTk.PhotoImage(image, master=master)
 Label(left, image=imageEx).grid(row=1, column=0, padx=10, pady=15)
 
-Label(left, text="Other Information", font="Verdna 11 bold", fg="#00695C", bg="#a5d6a7", pady=10).grid(row=2, column=0)
+Label(left, text="Other Information", font="Verdana 11 bold", fg="#00695C", bg="#a5d6a7", pady=10).grid(row=2, column=0)
 
 extra_information = "Filename: " + filename + "\n" + "Path: " + location
 info = Label(left, text=extra_information, font="Verdana 10 bold", bg="#a5d6a7", fg="#00897B")
@@ -80,47 +82,36 @@ separator = ttk.Separator(master, orient="vertical")
 separator.grid(row=0, column=1, sticky="sn", rowspan=1)
 
 #----RIGHT----
-right = Frame(master,  bg="#a5d6a7", highlightthickness=0, highlightbackground="#a5d6a7")
-right.grid(row=0, column=2, padx=10, pady=2, sticky=N+S)
+right = Frame(master,  bg="#a5d6a7", highlightthickness=0, highlightbackground="#a5d6a7", width=500, height=500)
+right.grid(row=0, column=2, padx=10, pady=2, sticky="ns")
 
 intro = Label(right, text="Image Metadata", fg="#d7ffd9", bg="#75a478", font="Verdana 10 bold", height=2, width=70)
 intro.grid(row=0, column=0, padx=10, pady=20)
-#-----------
-meta_table = Frame(right, bg="#a5d6a7", highlightthickness=0, highlightbackground="#a5d6a7")
-meta_table.grid(row=1, column=0, padx=10, pady=2, sticky=N+S)
-# scroll = Scrollbar(meta_table, orient="vertical", command=meta_table.yview)
-# meta_table.configure(yscrollcommand=scroll.set)
-#
-# meta_table.pack(side="left")
-# #meta_table.create_window((0,0), window=meta_table, anchor="nw")
-# scroll.pack(side="right",fill="y")
-# meta_table.pack(side="left")
 
+table = Frame(right,  bg="#a5d6a7", highlightthickness=0, highlightbackground="#a5d6a7", width=500, height=500)
+table.grid(row=1, column=0, padx=10, pady=2, sticky="ns")
 
-#this is only loking at xml meta and 0s aren't discounted
-r = 1
-c = 0
+canvas = Canvas(table, width=600, height=440, background="#a5d6a7", highlightbackground="#a5d6a7")
+scrolly = Scrollbar(table, orient='vertical', command=canvas.yview)
+
+i = 0
 for key, value in metadata_xml.items():
-    c = c % 2
-    Label(meta_table, text=key, borderwidth=1, padx=0, bg="#a5d6a7").grid(row=r, column=c, sticky=W)
-    c+=1
-    Label(meta_table, text=value, borderwidth=1, padx=0, bg="#a5d6a7").grid(row=r, column=c, sticky=W)
-    r+=1
-    c+=1
+    myText = key + ": " + value
+    label = Label(canvas, text=myText)
+    canvas.create_window(0, i * 50, anchor='nw', window=label, height=15)
+    canvas.configure(background="#ff34ff")
+    i += 1
 
+# # display labels in the canvas
+# for i in range(10):
+#     label = Label(canvas, text='label %i' % i)
+#     canvas.create_window(0, i*30, anchor='nw', window=label, height=15)
+#     canvas.configure(background="#ff34ff")
 
-#-----------
-# text1 = Text(right, height=30, width=80)
-# text1.grid(row=1, column=0, padx=10, pady=10)
-# scroll = Scrollbar(right, orient="vertical", command=text1.yview)
-#
-# text1.config(yscrollcommand=scroll.set)
-# text1.insert(END, all_meta)
-# #text1.pack(side=LEFT, fill=Y)
-# scroll.config(command=text1.yview)
-# scroll.grid(row=1, column=0, padx=10, pady=30)
-# #scroll.pack(side=RIGHT, fill=Y)
-
+canvas.configure(scrollregion=canvas.bbox('all'), yscrollcommand=scrolly.set, background="#a5d6a7")
+#canvas.config(width=600, height=440)
+canvas.pack(fill='both', expand=True, side='left')
+scrolly.pack(fill='y', side='right')
 
 master.mainloop()
 
