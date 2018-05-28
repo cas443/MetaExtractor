@@ -14,12 +14,14 @@ from PIL import Image, ImageTk
 #     messagebox.showerror("Error", "Invalid file chosen.")
 
 
-#location = "/home/jo/Desktop/basic_maths.jpg"
-location = "/home/jo/Desktop/pasta_cooked.jpg"
-#location = "/home/jo/Desktop/image.jpg"
-#location = "/home/jo/Desktop/villa1.JPG"
-#location = "/home/jo/Desktop/510222832.jpg"
-#location = "/home/jo/Desktop/Apple iPhone 4S.jpg"
+#location = "/home/jo/Desktop/MetaImages/basic_maths.jpg"
+#location = "/home/jo/Desktop/MetaImages/pasta_cooked.jpg"
+#location = "/home/jo/Desktop/MetaImages/image.jpg"
+#location = "/home/jo/Desktop/MetaImages/villa1.JPG"
+#location = "/home/jo/Desktop/MetaImages/510222832.jpg"
+#location = "/home/jo/Desktop/MetaImages/Apple iPhone 4S.jpg"
+
+location = "/home/jo/Pictures/IMG_20170617_161233.jpg"
 
 file = open(location, "rb")
 imgdata = file.read()
