@@ -96,17 +96,26 @@ scrolly = Scrollbar(table, orient='vertical', command=canvas.yview)
 
 i = 0
 for key, value in metadata_xml.items():
-    myText = key + ": " + value
-    label = Label(canvas, text=myText)
+    if "0" not in value and "http" not in value:
+        l = len(key)
+        tab = ""
+        if l < 9: tab = "\t\t\t"
+        elif l < 20: tab = "\t\t"
+        elif l < 30: tab = "\t"
+        else: tab = ""
+
+        myText = key + ": " + tab + value
+        label = Label(canvas, text=myText)
+        canvas.create_window(0, i * 50, anchor='nw', window=label, height=15)
+        canvas.configure(background="#ff34ff")
+        i += 1
+
+i = 0
+for j in metadata_ord:
+    label = Label(canvas, text=j)
     canvas.create_window(0, i * 50, anchor='nw', window=label, height=15)
     canvas.configure(background="#ff34ff")
     i += 1
-
-# # display labels in the canvas
-# for i in range(10):
-#     label = Label(canvas, text='label %i' % i)
-#     canvas.create_window(0, i*30, anchor='nw', window=label, height=15)
-#     canvas.configure(background="#ff34ff")
 
 canvas.configure(scrollregion=canvas.bbox('all'), yscrollcommand=scrolly.set, background="#a5d6a7")
 #canvas.config(width=600, height=440)
