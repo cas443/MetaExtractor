@@ -1,11 +1,6 @@
-import xml_meta_handler, ord_meta_handler
+import xml_meta_handler, ord_meta_handler, gui_handler
 import re
-from tkinter import *
-import tkinter.ttk as ttk
-from tkinter import Tk
-from tkinter import messagebox
-from tkinter.filedialog import askopenfilename
-from PIL import Image, ImageTk
+
 
 
 #location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")] )
@@ -53,77 +48,10 @@ for i in metadata_ord:
     all_meta += item
 
 
-master = Tk()
-master.title("MetaEx: Image Metadata Extraction Tool")
-master.configure(background="#a5d6a7")
-master.pack_propagate(0)
-master.geometry('1120x600')
+###########################################################################################
+#                                       GUI
+###########################################################################################
 
-#----LEFT----
-left = Frame(master, width=200, height=500, highlightthickness=0, bg="#a5d6a7")
-left.grid(row=0, column=0, padx=10, pady=2, sticky=N+S)
-
-logo = Label(left, text="MetaEx", fg="#00695C", bg="#a5d6a7", font="Verdana 30 bold", underline=True)
-logo.grid(row=0, column=0, padx=10, pady=30)
-
-image = Image.open(location)
-image = image.resize((300,250), Image.ANTIALIAS)
-imageEx = ImageTk.PhotoImage(image, master=master)
-Label(left, image=imageEx).grid(row=1, column=0, padx=10, pady=15)
-
-Label(left, text="Other Information", font="Verdana 11 bold", fg="#00695C", bg="#a5d6a7", pady=10).grid(row=2, column=0)
-
-extra_information = "Filename: " + filename + "\n" + "Path: " + location
-info = Label(left, text=extra_information, font="Verdana 10 bold", bg="#a5d6a7", fg="#00897B")
-info.grid(row=3, column=0)
-
-#----MIDDLE----
-separator = ttk.Separator(master, orient="vertical")
-separator.grid(row=0, column=1, sticky="sn", rowspan=1)
-
-#----RIGHT----
-right = Frame(master,  bg="#a5d6a7", highlightthickness=0, highlightbackground="#a5d6a7", width=500, height=500)
-right.grid(row=0, column=2, padx=10, pady=2, sticky="ns")
-
-intro = Label(right, text="Image Metadata", fg="#d7ffd9", bg="#75a478", font="Verdana 10 bold", height=2, width=70)
-intro.grid(row=0, column=0, padx=10, pady=20)
-
-table = Frame(right,  bg="#a5d6a7", highlightthickness=0, highlightbackground="#a5d6a7", width=500, height=500)
-table.grid(row=1, column=0, padx=10, pady=2, sticky="ns")
-
-canvas = Canvas(table, width=600, height=440, background="#a5d6a7", highlightbackground="#a5d6a7")
-scrolly = Scrollbar(table, orient='vertical', command=canvas.yview)
-
-i = 0
-for key, value in metadata_xml.items():
-    if "0" not in value and "http" not in value:
-        l = len(key)
-        tab = ""
-        if l < 9: tab = "\t\t\t"
-        elif l < 20: tab = "\t\t"
-        elif l < 30: tab = "\t"
-        else: tab = ""
-
-        myText = key + ": " + tab + value
-        label = Label(canvas, text=myText)
-        canvas.create_window(0, i * 50, anchor='nw', window=label, height=15)
-        canvas.configure(background="#ff34ff")
-        i += 1
-
-i = 0
-for j in metadata_ord:
-    label = Label(canvas, text=j)
-    canvas.create_window(0, i * 50, anchor='nw', window=label, height=15)
-    canvas.configure(background="#ff34ff")
-    i += 1
-
-canvas.configure(scrollregion=canvas.bbox('all'), yscrollcommand=scrolly.set, background="#a5d6a7")
-#canvas.config(width=600, height=440)
-canvas.pack(fill='both', expand=True, side='left')
-scrolly.pack(fill='y', side='right')
-
-master.mainloop()
-
-
+gui_handler.gui(metadata_ord, metadata_xml, location, filename)
 
 
