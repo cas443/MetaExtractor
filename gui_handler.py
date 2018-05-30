@@ -1,3 +1,4 @@
+import base
 from tkinter import *
 import tkinter.ttk as ttk
 from tkinter import Tk
@@ -7,13 +8,16 @@ from PIL import Image, ImageTk
 from tkinter import filedialog
 
 textToSave = ""
-filter_all = True
-filter_xml = False
-filter_ord = False
+filter_xml = True
+filter_ord = True
+
+
 
 def openFile():
-    askopenfilename(title="Select image for metadata extraction",
-                    filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")])
+
+    location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")])
+
+    base.start(location, filter_xml, filter_ord)
 
 def saveFile():
     f = filedialog.asksaveasfile(mode='w', defaultextension=".txt", initialfile='METAEX_metadata.txt',)
@@ -22,17 +26,14 @@ def saveFile():
     f.close()
 
 def filterAll():
-    filter_all = True
-    filter_xml = False
-    filter_ord = False
+    filter_xml = True
+    filter_ord = True
 
 def filterXML():
-    filter_all = False
     filter_xml = True
     filter_ord = False
 
 def filterORD():
-    filter_all = False
     filter_xml = False
     filter_ord = True
 
