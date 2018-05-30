@@ -11,6 +11,10 @@ textToSave = ""
 filter_xml = True
 filter_ord = True
 
+meta_xml = ""
+meta_ord = ""
+loc = ""
+
 
 
 def openFile():
@@ -26,14 +30,24 @@ def saveFile():
     f.close()
 
 def filterAll():
+    global filter_xml
+    global filter_ord
+
     filter_xml = True
     filter_ord = True
 
+
 def filterXML():
+    global filter_xml
+    global filter_ord
+
     filter_xml = True
     filter_ord = False
 
 def filterORD():
+    global filter_xml
+    global filter_ord
+
     filter_xml = False
     filter_ord = True
 
@@ -88,6 +102,13 @@ def gui(metadata_ord, metadata_xml, location, filename):
     global filter_xml
     global filter_ord
 
+    global meta_xml
+    global meta_ord
+    global loc
+
+    meta_xml = metadata_xml
+    meta_ord = metadata_ord
+    loc = location
     #color scheme
     CMAIN = "#ffffff"  #a5d6a7"
     CDARKER = "#024016" #"#75a478"
@@ -143,11 +164,15 @@ def gui(metadata_ord, metadata_xml, location, filename):
     imageEx = ImageTk.PhotoImage(image, master=master)
     Label(left, image=imageEx).grid(row=1, column=0, padx=10, pady=15)
 
-    Label(left, text="Other Information", font="Verdana 11 bold", fg="#00695C", bg=CMAIN, pady=10).grid(row=2, column=0)
+    Label(left, text="Other Information", font="Verdana 11 bold", fg="#00695C", bg=CMAIN, pady=10).grid(row=2, column=0, sticky="nw")
 
-    extra_information = "Filename: " + filename + "\n" + "Path: " + location
-    info = Label(left, text=extra_information, font="Verdana 10 bold", bg=CMAIN, fg="#00897B")
-    info.grid(row=3, column=0)
+    extra_information = "Filename: " + filename
+    info = Label(left, text=extra_information, font="Verdana 10 ", bg=CMAIN, fg="#00897B")
+    info.grid(row=3, column=0, sticky="nw")
+
+    extra_information2 = "Path: " + location
+    info2 = Label(left, text=extra_information2, font="Verdana 10 ", bg=CMAIN, fg="#00897B")
+    info2.grid(row=4, column=0, sticky="nw")
 
     # ----MIDDLE----
     separator = ttk.Separator(master, orient="vertical")
@@ -160,14 +185,14 @@ def gui(metadata_ord, metadata_xml, location, filename):
     intro = Label(right, text="Image Metadata", fg="#d7ffd9", bg=CDARKER, font="Verdana 10 bold", height=2, width=70)
     intro.grid(row=0, column=0, padx=10, pady=20)
 
-    table = Frame(right, bg=CMAIN, highlightthickness=0, highlightbackground=CMAIN, width=500, height=500)
-    table.grid(row=1, column=0, padx=10, pady=2, sticky="ns")
+    table = Frame(right, bg=CMAIN, highlightthickness=0, highlightbackground=CMAIN, width=500, height=400)
+    table.grid(row=1, column=0, padx=10, pady=0, sticky="ns")
 
     canvas = Canvas(table, width=600, height=440, background=CMAIN, highlightbackground=CMAIN)
     scrolly = Scrollbar(table, orient='vertical', command=canvas.yview)
 
     i = 0
-    if filter_xml or filter_all:
+    if filter_xml:
         for key, value in metadata_xml.items():
             if "0" not in value and "http" not in value:
                 l = len(key)
@@ -183,13 +208,12 @@ def gui(metadata_ord, metadata_xml, location, filename):
 
                 myText = key + ": " + tab + value
                 label = Label(canvas, text=myText)
-                canvas.create_window(0, i * 50, anchor='nw', window=label, height=15)
+                canvas.create_window(0, i * 25, anchor='nw', window=label, height=15)
                 label.configure(background=CMAIN)
                 textToSave += myText + "\n"
                 i += 1
 
-
-    if filter_ord or filter_all:
+    if filter_ord:
         for j in metadata_ord:
             label = Label(canvas, text=j)
             canvas.create_window(0, i * 50, anchor='nw', window=label, height=15)
