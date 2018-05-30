@@ -88,8 +88,8 @@ def gui(metadata_ord, metadata_xml, location, filename):
     global filter_ord
 
     #color scheme
-    CMAIN = "#a5d6a7"
-    CDARKER = "#75a478"
+    CMAIN = "#ffffff"  #a5d6a7"
+    CDARKER = "#024016" #"#75a478"
     CLOGO="#00695C"
 
 
