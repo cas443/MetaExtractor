@@ -8,20 +8,13 @@ from PIL import Image, ImageTk
 from tkinter import filedialog
 
 textToSave = ""
-filter_xml = True
-filter_ord = True
-
-meta_xml = ""
-meta_ord = ""
-loc = ""
-
 
 
 def openFile():
 
     location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")])
 
-    base.start(location, filter_xml, filter_ord)
+    base.start(location)
 
 def saveFile():
     f = filedialog.asksaveasfile(mode='w', defaultextension=".txt", initialfile='METAEX_metadata.txt',)
@@ -29,27 +22,13 @@ def saveFile():
     f.write(text)
     f.close()
 
-def filterAll():
+def crawl():
     global filter_xml
     global filter_ord
 
     filter_xml = True
     filter_ord = True
 
-
-def filterXML():
-    global filter_xml
-    global filter_ord
-
-    filter_xml = True
-    filter_ord = False
-
-def filterORD():
-    global filter_xml
-    global filter_ord
-
-    filter_xml = False
-    filter_ord = True
 
 def hello():
     print("hello")
@@ -97,21 +76,10 @@ def usage():
 
 def gui(metadata_ord, metadata_xml, location, filename):
 
-    global textToSave
-    global filter_all
-    global filter_xml
-    global filter_ord
+    textToSave = ""
 
-    global meta_xml
-    global meta_ord
-    global loc
-
-    meta_xml = metadata_xml
-    meta_ord = metadata_ord
-    loc = location
-    #color scheme
     CMAIN = "#ffffff"  #a5d6a7"
-    CDARKER = "#024016" #"#75a478"
+    CDARKER = "#024016" # #1ba1e2
     CLOGO="#00695C"
 
 
@@ -138,10 +106,8 @@ def gui(metadata_ord, metadata_xml, location, filename):
     # create more pulldown menus
     editmenu = Menu(menubar, tearoff=0)
     editmenu.configure(background="#ffffff")
-    editmenu.add_command(label="Show All", command=filterAll)
-    editmenu.add_command(label="Display XML Only", command=filterXML)
-    editmenu.add_command(label="Display ORD Only", command=filterORD)
-    menubar.add_cascade(label="Filter", menu=editmenu)
+    editmenu.add_command(label="URL", command=crawl)
+    menubar.add_cascade(label="Crawl", menu=editmenu)
 
     helpmenu = Menu(menubar, tearoff=0)
     helpmenu.configure(background="#ffffff")
@@ -175,15 +141,17 @@ def gui(metadata_ord, metadata_xml, location, filename):
     info2.grid(row=4, column=0, sticky="nw")
 
     # ----MIDDLE----
-    separator = ttk.Separator(master, orient="vertical")
-    separator.grid(row=0, column=1, sticky="sn", rowspan=2)
+    # separator = ttk.Separator(master, orient="vertical")
+    # separator.grid(row=0, column=1, sticky="sn", rowspan=2)
 
     # ----RIGHT----
     right = Frame(master, bg=CMAIN, highlightthickness=0, highlightbackground=CMAIN, width=500, height=500)
-    right.grid(row=0, column=2, padx=10, pady=2, sticky="ns")
+    right.grid(row=0, column=2, padx=50, pady=2, sticky="ns")
 
-    intro = Label(right, text="Image Metadata", fg="#d7ffd9", bg=CDARKER, font="Verdana 10 bold", height=2, width=70)
+    intro = Label(right, text="Image Metadata", fg="#ffffff", bg="#1ba1e2", font="Verdana 10 bold", height=2, width=70)
     intro.grid(row=0, column=0, padx=10, pady=20)
+
+
 
     table = Frame(right, bg=CMAIN, highlightthickness=0, highlightbackground=CMAIN, width=500, height=400)
     table.grid(row=1, column=0, padx=10, pady=0, sticky="ns")
@@ -192,38 +160,37 @@ def gui(metadata_ord, metadata_xml, location, filename):
     scrolly = Scrollbar(table, orient='vertical', command=canvas.yview)
 
     i = 0
-    if filter_xml:
-        for key, value in metadata_xml.items():
-            if "0" not in value and "http" not in value:
-                l = len(key)
+    for key, value in metadata_xml.items():
+        if "0" not in value and "http" not in value:
+            l = len(key)
+            tab = ""
+            if l < 9:
+                tab = "\t\t\t"
+            elif l < 20:
+                tab = "\t\t"
+            elif l < 30:
+                tab = "\t"
+            else:
                 tab = ""
-                if l < 9:
-                    tab = "\t\t\t"
-                elif l < 20:
-                    tab = "\t\t"
-                elif l < 30:
-                    tab = "\t"
-                else:
-                    tab = ""
 
-                myText = key + ": " + tab + value
-                label = Label(canvas, text=myText)
-                canvas.create_window(0, i * 25, anchor='nw', window=label, height=15)
-                label.configure(background=CMAIN)
-                textToSave += myText + "\n"
-                i += 1
-
-    if filter_ord:
-        for j in metadata_ord:
-            label = Label(canvas, text=j)
-            canvas.create_window(0, i * 50, anchor='nw', window=label, height=15)
+            myText = key + ": " + tab + value
+            label = Label(canvas, text=myText)
+            canvas.create_window(0, i * 22, anchor='nw', window=label, height=15)
             label.configure(background=CMAIN)
-            textToSave += j + "\n"
+            textToSave += myText + "\n"
             i += 1
+
+    for j in metadata_ord:
+        label = Label(canvas, text=j)
+        canvas.create_window(0, i * 22, anchor='nw', window=label, height=15)
+        label.configure(background=CMAIN)
+        textToSave += j + "\n"
+        i += 1
 
     canvas.configure(scrollregion=canvas.bbox('all'), yscrollcommand=scrolly.set, background=CMAIN)
     # canvas.config(width=600, height=440)
     canvas.pack(fill='both', expand=True, side='left')
+    scrolly.configure(bg="#ffffff")
     scrolly.pack(fill='y', side='right')
 
     master.mainloop()

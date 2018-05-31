@@ -11,7 +11,7 @@ from PIL import Image, ImageTk
 from tkinter import filedialog
 
 
-def start(location, meta_XML, meta_ODR):
+def start(location):
     file = open(location, "rb")
     imgdata = file.read()
     file.close()
@@ -26,25 +26,9 @@ def start(location, meta_XML, meta_ODR):
     #default values in cse they are False
     metadata_ord = []
     metadata_xml = {"" : ""}
-    if meta_XML:
-        metadata_ord = ord_meta_handler.handle_meta(imgdata)
-    if meta_ODR:
-        metadata_xml = xml_meta_handler.handle_meta(imgdata)
+    metadata_ord = ord_meta_handler.handle_meta(imgdata)
+    metadata_xml = xml_meta_handler.handle_meta(imgdata)
 
-    print(type(metadata_ord), type(metadata_xml))
-
-    all_meta = ""
-
-    # PRINT XML METADATA
-    for key, value in metadata_xml.items():
-        if value is not "0" and key is not "WebStatement":
-            item = key + ":\t " + value + "\n"
-            all_meta += item
-
-    # PRINT ORDINARY METADATA
-    for i in metadata_ord:
-        item = i + "\n"
-        all_meta += item
 
     ###########################################################################################
     #                                       GUI
@@ -60,7 +44,7 @@ if __name__ == "__main__":
     #location = "/home/jo/Desktop/MetaImages/basic_maths.jpg"
     location = "/home/jo/Desktop/MetaImages/pasta_cooked.jpg"
 
-    start(location, True, True)
+    start(location)
 
 
 
