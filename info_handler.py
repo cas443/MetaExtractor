@@ -19,7 +19,9 @@ class _PopuleteGui():
         self.location = location
         self.metadata_xml = metadata_xml
         self.metadata_ord = metadata_ord
-        self.textToSave = ""
+        self.textToSave = []
+        self.a1 = False
+        self.a2 = False
         print()
 
     def _pop_image_(self):
@@ -71,6 +73,7 @@ class _PopuleteGui():
         label.pack()
 
     def _pop_xml_(self, canvas):
+        temp = ""
         for key, value in self.metadata_xml.items():
             if "0" not in value and "http" not in value:
                 l = len(key)
@@ -88,29 +91,34 @@ class _PopuleteGui():
                 label = Label(canvas, text=myText)
                 canvas.create_window(0, self.i * 22, anchor='nw', window=label, height=15)
                 label.configure(background="#ffffff")
-                self.textToSave += myText + "\n"
+                temp += myText + "\n"
                 self.i += 1
 
+        self.textToSave.append(temp)
+        self.a1 = True
         return  self.textToSave
 
     def _pop_ord_(self, canvas):
-
+        temp = ""
         for j in self.metadata_ord:
             label = Label(canvas, text=j)
             canvas.create_window(0, self.i * 22, anchor='nw', window=label, height=15)
             label.configure(background="#ffffff")
-            self.textToSave += j + "\n"
+            temp += j + "\n"
             self.i += 1
 
+        self.textToSave.append(temp)
+        self.a2= True
         return  self.textToSave
 
     def _save_meta_(self):
         f = filedialog.asksaveasfile(mode='w', defaultextension=".txt", initialfile='METAEX_metadata.txt', )
-        text = self.textToSave
+        #text = self.textToSave
+        text = ""
+        for i in self.textToSave:
+            text += i
         f.write(text)
         f.close()
-
-    # good
 
     def _open_new_(self):
         location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")])
@@ -128,3 +136,19 @@ class _PopuleteGui():
         metadata_xml = xml_meta_handler.handle_meta(imgdata)
 
         gui_handler._GUI(metadata_ord, metadata_xml, location, filename)
+
+    def _filter_(self, XML_bool, ORD_bool):
+
+        if (self.a1 is True and self.a2 is True) or (self.a1 is True and self.a2 is False) or (self.a1 is False and self.a2 is True):
+            if self.metadata_xml and XML_bool:
+                self.textToSave = self.textToSave[0]
+                self.master.update_idletasks()
+            if self.metadata_xml and self.metadata_ord and ORD_bool:
+                self.textToSave = self.textToSave[1]
+                self.master.update_idletasks()
+            if not self.metadata_xml and self.metadata_ord and ORD_bool:
+                self.textToSave = self.textToSave[0]
+                self.master.update_idletasks()
+            if XML_bool and ORD_bool:
+                self.textToSave = self.textToSave
+                self.master.update_idletasks()

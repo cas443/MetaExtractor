@@ -18,7 +18,7 @@ class _GUI():
         self.metadata_xml = metadata_xml
         self.location = location
         self.filename = filename
-        self.textToSave = ""
+        self.textToSave = []
 
         self._mainGuiInterface()
 
@@ -45,6 +45,13 @@ class _GUI():
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=master.quit)
         menubar.add_cascade(label="File", menu=filemenu)
+
+        filtermenu = Menu(menubar, tearoff=0)
+        filtermenu.configure(background="#ffffff")
+        filtermenu.add_command(label="Filter by ALL", command=pop._filter_(True, True))
+        filtermenu.add_command(label="Filter by XML", command=pop._filter_(True, False))
+        filtermenu.add_command(label="Filter by ORD", command=pop._filter_(False, True))
+        menubar.add_cascade(label="Filter", menu=filtermenu)
 
         # create more pulldown menus
         spidermenu = Menu(menubar, tearoff=0)
