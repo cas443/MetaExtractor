@@ -113,7 +113,6 @@ class _PopuleteGui():
 
     def _save_meta_(self):
         f = filedialog.asksaveasfile(mode='w', defaultextension=".txt", initialfile='METAEX_metadata.txt', )
-        #text = self.textToSave
         text = ""
         for i in self.textToSave:
             text += i
@@ -138,6 +137,8 @@ class _PopuleteGui():
         gui_handler._GUI(metadata_ord, metadata_xml, location, filename)
 
     def _filter_(self, XML_bool, ORD_bool):
+
+        print()
 
         if (self.a1 is True and self.a2 is True) or (self.a1 is True and self.a2 is False) or (self.a1 is False and self.a2 is True):
             if self.metadata_xml and XML_bool:
