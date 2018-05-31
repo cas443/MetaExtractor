@@ -10,12 +10,6 @@ from tkinter import filedialog
 textToSave = ""
 
 
-def openFile():
-
-
-    base.start(location)
-
-
 
 class _GUI():
 
@@ -46,7 +40,7 @@ class _GUI():
         # create a pulldown menu, and add it to the menu bar
         filemenu = Menu(menubar, tearoff=0)
         filemenu.configure(background="#ffffff")
-        filemenu.add_command(label="Open New...", command=openFile)
+        filemenu.add_command(label="Open New...", command=pop._open_new_)
         filemenu.add_command(label="Save Meta to file...", command=pop._save_meta_)
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=master.quit)

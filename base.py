@@ -30,7 +30,7 @@ if __name__ == "__main__":
     metadata_ord = ord_meta_handler.handle_meta(imgdata)
     metadata_xml = xml_meta_handler.handle_meta(imgdata)
 
-    gui = gui_handler._GUI(metadata_ord, metadata_xml, location, filename);
+    gui = gui_handler._GUI(metadata_ord, metadata_xml, location, filename)
     gui._mainGuiInterface()
 
 
