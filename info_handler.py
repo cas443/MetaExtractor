@@ -1,6 +1,7 @@
 from PIL import Image, ImageTk
 from tkinter import *
-import ord_meta_handler, xml_meta_handler, gui_handler
+import ord_meta_handler, xml_meta_handler, gui_handler, scrape_handler
+import subprocess
 
 from tkinter import *
 import tkinter.ttk as ttk
@@ -22,6 +23,8 @@ class _PopuleteGui():
         self.textToSave = []
         self.a1 = False
         self.a2 = False
+
+        self.spider = scrape_handler.Spider
         print()
 
     def _pop_image_(self):
@@ -146,10 +149,25 @@ class _PopuleteGui():
                 self.master.update_idletasks()
             if self.metadata_xml and self.metadata_ord and ORD_bool:
                 self.textToSave = self.textToSave[1]
+                print(self.textToSave)
                 self.master.update_idletasks()
             if not self.metadata_xml and self.metadata_ord and ORD_bool:
                 self.textToSave = self.textToSave[0]
+                print(self.textToSave)
                 self.master.update_idletasks()
             if XML_bool and ORD_bool:
                 self.textToSave = self.textToSave
                 self.master.update_idletasks()
+
+    def _url_scrap_(self):
+        url = ""
+
+        master = Tk()
+        Label(master, text="Scrap URL: ").grid(row=0)
+
+        e1 = Entry(master)
+        e1.grid(row=0, column=1)
+
+        b = Button(master, text='Scrape', command=subprocess.call("scrapy crawl spidyBoo"))
+        b.configure(bg="#1ba1e2", fg="#ffffff")
+        b.grid(row=3, column=0, sticky=W, pady=4, padx=3)
