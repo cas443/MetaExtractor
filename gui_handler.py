@@ -1,4 +1,4 @@
-import base, cr, info_handler
+import base, scrape_handler, info_handler
 from tkinter import *
 import tkinter.ttk as ttk
 from tkinter import Tk
@@ -13,6 +13,7 @@ textToSave = ""
 
 class _GUI():
 
+
     def __init__(self, metadata_ord, metadata_xml, location, filename):
         self.metadata_ord = metadata_ord
         self.metadata_xml = metadata_xml
@@ -20,16 +21,18 @@ class _GUI():
         self.filename = filename
         self.textToSave = []
 
+        self.info = info_handler._PopuleteGui
+
         self._mainGuiInterface()
 
-    def c1(self, pop):
-        info_handler._PopuleteGui._filter_(pop, True, True)
+    def c1(self):
+        self.info._filter_(pop, True, True)
 
-    def c2(self, pop):
-        info_handler._PopuleteGui._filter_(pop, True, False)
+    def c2(self):
+        self.info._filter_(pop, True, False)
 
-    def c3(self, pop):
-        info_handler._PopuleteGui._filter_(pop, False, True)
+    def c3(self):
+        self.info._filter_(pop, False, True)
 
     def _mainGuiInterface(self):
 
@@ -39,6 +42,7 @@ class _GUI():
         master.pack_propagate(0)
         master.geometry('1120x540')
 
+        global pop
         pop = info_handler._PopuleteGui(master, self.location, self.metadata_xml, self.metadata_ord)
 
         # ----MENU----
@@ -56,15 +60,15 @@ class _GUI():
 
         filtermenu = Menu(menubar, tearoff=0)
         filtermenu.configure(background="#ffffff")
-        filtermenu.add_command(label="Filter by ALL", command=self.c1(pop))
-        filtermenu.add_command(label="Filter by XML", command=self.c2(pop))
-        filtermenu.add_command(label="Filter by ORD", command=self.c3(pop))
+        filtermenu.add_command(label="Filter by ALL", command=self.c1)
+        filtermenu.add_command(label="Filter by XML", command=self.c2)
+        filtermenu.add_command(label="Filter by ORD", command=self.c1)
         menubar.add_cascade(label="Filter", menu=filtermenu)
 
         # create more pulldown menus
         spidermenu = Menu(menubar, tearoff=0)
         spidermenu.configure(background="#ffffff")
-        spidermenu.add_command(label="URL", command=cr.cra)
+        spidermenu.add_command(label="URL", command=pop._url_scrap_)
         menubar.add_cascade(label="Crawl", menu=spidermenu)
 
         helpmenu = Menu(menubar, tearoff=0)
