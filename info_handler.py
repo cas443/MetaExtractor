@@ -21,8 +21,6 @@ class _PopuleteGui():
         self.metadata_xml = metadata_xml
         self.metadata_ord = metadata_ord
         self.textToSave = []
-        self.a1 = False
-        self.a2 = False
 
         self.spider = scrape_handler.Spider
         print()
@@ -98,7 +96,6 @@ class _PopuleteGui():
                 self.i += 1
 
         self.textToSave.append(temp)
-        self.a1 = True
         return  self.textToSave
 
     def _pop_ord_(self, canvas):
@@ -111,7 +108,6 @@ class _PopuleteGui():
             self.i += 1
 
         self.textToSave.append(temp)
-        self.a2= True
         return  self.textToSave
 
     def _save_meta_(self):
@@ -121,27 +117,6 @@ class _PopuleteGui():
             text += i
         f.write(text)
         f.close()
-
-
-    def _filter_(self, XML_bool, ORD_bool):
-
-        print()
-
-        if (self.a1 is True and self.a2 is True) or (self.a1 is True and self.a2 is False) or (self.a1 is False and self.a2 is True):
-            if self.metadata_xml and XML_bool:
-                self.textToSave = self.textToSave[0]
-                self.master.update_idletasks()
-            if self.metadata_xml and self.metadata_ord and ORD_bool:
-                self.textToSave = self.textToSave[1]
-                print(self.textToSave)
-                self.master.update_idletasks()
-            if not self.metadata_xml and self.metadata_ord and ORD_bool:
-                self.textToSave = self.textToSave[0]
-                print(self.textToSave)
-                self.master.update_idletasks()
-            if XML_bool and ORD_bool:
-                self.textToSave = self.textToSave
-                self.master.update_idletasks()
 
     def _url_scrap_(self):
         url = ""
