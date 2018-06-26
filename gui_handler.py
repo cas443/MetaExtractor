@@ -26,15 +26,6 @@ class _GUI():
         #if event from _open_new
         #self._mainGuiInterface()
 
-    def c1(self):
-        self.info._filter_(pop, True, True)
-
-    def c2(self):
-        self.info._filter_(pop, True, False)
-
-    def c3(self):
-        self.info._filter_(pop, False, True)
-
     def _mainGuiInterface(self):
 
         master = Tk()
@@ -58,18 +49,12 @@ class _GUI():
         filemenu.add_command(label="Exit", command=master.quit)
         menubar.add_cascade(label="File", menu=filemenu)
 
-        filtermenu = Menu(menubar, tearoff=0)
-        filtermenu.configure(background="#ffffff")
-        filtermenu.add_command(label="Filter by ALL", command=self.c1)
-        filtermenu.add_command(label="Filter by XML", command=self.c2)
-        filtermenu.add_command(label="Filter by ORD", command=self.c1)
-        menubar.add_cascade(label="Filter", menu=filtermenu)
-
         # create more pulldown menus
         spidermenu = Menu(menubar, tearoff=0)
         spidermenu.configure(background="#ffffff")
         spidermenu.add_command(label="URL", command=pop._url_scrap_)
         menubar.add_cascade(label="Crawl", menu=spidermenu)
+        #SOME SORT OF ANALYSE FUNCTIONALITY? IMAGES ON AN URL? LOCAL VS AVAILABLE?
 
         displaymenu = Menu(menubar, tearoff=0)
         displaymenu.configure(background="#ffffff")
