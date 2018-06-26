@@ -122,22 +122,6 @@ class _PopuleteGui():
         f.write(text)
         f.close()
 
-    def _open_new_(self):
-        location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")])
-
-        file = open(location, "rb")
-        imgdata = file.read()
-        file.close()
-
-        imgdata = str(imgdata)
-
-        filename = re.search(r"(?:.*/)(.*)(?=)", location).group(1)
-        print("[+] METADATA FROM FILE: ", filename)
-
-        metadata_ord = ord_meta_handler.handle_meta(imgdata)
-        metadata_xml = xml_meta_handler.handle_meta(imgdata)
-
-        gui_handler._GUI(metadata_ord, metadata_xml, location, filename)
 
     def _filter_(self, XML_bool, ORD_bool):
 

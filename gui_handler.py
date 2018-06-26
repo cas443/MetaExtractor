@@ -23,7 +23,8 @@ class _GUI():
 
         self.info = info_handler._PopuleteGui
 
-        self._mainGuiInterface()
+        #if event from _open_new
+        #self._mainGuiInterface()
 
     def c1(self):
         self.info._filter_(pop, True, True)
@@ -52,7 +53,6 @@ class _GUI():
         # create a pulldown menu, and add it to the menu bar
         filemenu = Menu(menubar, tearoff=0)
         filemenu.configure(background="#ffffff")
-        filemenu.add_command(label="Open New...", command=pop._open_new_)
         filemenu.add_command(label="Save Meta to file...", command=pop._save_meta_)
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=master.quit)
@@ -70,6 +70,11 @@ class _GUI():
         spidermenu.configure(background="#ffffff")
         spidermenu.add_command(label="URL", command=pop._url_scrap_)
         menubar.add_cascade(label="Crawl", menu=spidermenu)
+
+        displaymenu = Menu(menubar, tearoff=0)
+        displaymenu.configure(background="#ffffff")
+        displaymenu.add_command(label="Image RGB Histogram", command=pop._url_scrap_)
+        menubar.add_cascade(label="Display", menu=displaymenu)
 
         helpmenu = Menu(menubar, tearoff=0)
         helpmenu.configure(background="#ffffff")
