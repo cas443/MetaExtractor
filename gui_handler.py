@@ -58,13 +58,14 @@ class _GUI():
 
         displaymenu = Menu(menubar, tearoff=0)
         displaymenu.configure(background="#ffffff")
-        displaymenu.add_command(label="Image RGB Histogram", command=pop._url_scrap_)
+        displaymenu.add_command(label="Image RGB Histogram", command=pop._rgb_histogram)
         menubar.add_cascade(label="Display", menu=displaymenu)
 
         helpmenu = Menu(menubar, tearoff=0)
         helpmenu.configure(background="#ffffff")
         helpmenu.add_command(label="About", command=pop._pop_about_)
         helpmenu.add_command(label="How to use", command=pop._pop_usage_)
+        helpmenu.add_command(label="Terminology", command=pop._pop_what_)
         menubar.add_cascade(label="Help", menu=helpmenu)
 
         # display the menu

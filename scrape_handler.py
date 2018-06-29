@@ -1,14 +1,9 @@
-import scrapy
+from bs4 import BeautifulSoup
 
-class Spider(scrapy.Spider):
-    name = "spidyBoo"
+class Spider():
 
-    def start(self, url):
-        yield scrapy.Request(url=url, callback=self.parse)
+    def __init__(self, url):
+        self.url = url
 
-    def parse(self, response):
-        page = response.url.split("/")[-2]
-        filename = '/home/jo/Desktop/quotes-%s.html' % page
-        with open(filename, 'wb') as f:
-            f.write(response.body)
-        self.log("Saved file %s " % filename)
+    def _begin_(self):
+        soup = BeautifulSoup(self.url)

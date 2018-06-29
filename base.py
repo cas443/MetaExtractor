@@ -12,11 +12,11 @@ from tkinter import filedialog
 
 
 if __name__ == "__main__":
-    #location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")] )
+    location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")] )
 
 
     #location = "/home/jo/Desktop/MetaImages/basic_maths.jpg"
-    location = "/home/jo/Desktop/MetaImages/pasta_cooked.jpg"
+    #location = "/home/jo/Desktop/MetaImages/pasta_cooked.jpg"
 
     file = open(location, "rb")
     imgdata = file.read()

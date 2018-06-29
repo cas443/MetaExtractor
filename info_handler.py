@@ -2,6 +2,7 @@ from PIL import Image, ImageTk
 from tkinter import *
 import ord_meta_handler, xml_meta_handler, gui_handler, scrape_handler
 import subprocess
+import cv2, numpy
 
 from tkinter import *
 import tkinter.ttk as ttk
@@ -73,6 +74,25 @@ class _PopuleteGui():
         label.configure(background="#ffffff")
         label.pack()
 
+    def _pop_what_(self):
+        TEXT_WHAT_IT_IS = """
+        
+            Image Histogram:
+            
+            An image histogram is a graphical representation of the tonal 
+            distribution in a digital image, It plots the number of pixels 
+            for each tonal value.
+            
+            Through the use of image histograms, the viewer can judge the 
+            entire tonal destribution at a glance.
+        
+        """
+
+        top = Toplevel()
+        label = Label(top, text=TEXT_WHAT_IT_IS, heigh=0, width=65)
+        label.configure(background="#ffffff")
+        label.pack()
+
     def _pop_xml_(self, canvas):
         temp = ""
         for key, value in self.metadata_xml.items():
@@ -119,6 +139,9 @@ class _PopuleteGui():
         f.close()
 
     def _url_scrap_(self):
+
+        spidy =  scrape_handler.Spider()
+
         url = ""
 
         master = Tk()
@@ -127,6 +150,27 @@ class _PopuleteGui():
         e1 = Entry(master)
         e1.grid(row=0, column=1)
 
-        b = Button(master, text='Scrape', command=subprocess.call("scrapy crawl spidyBoo"))
+        b = Button(master, text='Scrape', command=spidy.start(url))
         b.configure(bg="#1ba1e2", fg="#ffffff")
         b.grid(row=3, column=0, sticky=W, pady=4, padx=3)
+
+    def _rgb_histogram(self):
+        image = cv2.imread(self.location)
+        h = numpy.zeros((300, 256, 3))
+
+        bins = numpy.arange(256).reshape(256, 1)
+        color = [(255,0,0),(0,255,0),(0,0,255)]
+
+        for ch, col in enumerate(color):
+            hist_item = cv2.calcHist([image], [ch], None, [256], [0, 255])
+            cv2.normalize(hist_item, hist_item, 0, 255, cv2.NORM_MINMAX)
+            hist = numpy.int32(numpy.around(hist_item))
+            pts = numpy.column_stack((bins, hist))
+            cv2.polylines(h, [pts], False, col)
+
+        h = numpy.flipud(h)
+
+        cv2.imshow('colorhist', h)
+        cv2.waitKey(0)
+        #images plotting
+        #cv2.destroyAllWindows()
