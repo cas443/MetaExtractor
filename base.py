@@ -36,7 +36,7 @@ def start(location):
 
 
 if __name__ == "__main__":
-    Tk().withdraw() #crates and hides a 'root' lvl window so that the annoying gray window wont be seen
+    #Tk().withdraw() #crates and hides a 'root' lvl window so that the annoying gray window wont be seen
     #location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")] )
 
 

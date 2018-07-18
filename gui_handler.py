@@ -7,9 +7,10 @@ from tkinter.filedialog import askopenfilename, asksaveasfilename
 from PIL import Image, ImageTk
 from tkinter import filedialog
 import scraper
+import cv2, numpy
 
 textToSave = ""
-
+location1 = ""
 
 def openFile():
 
@@ -96,10 +97,32 @@ def terminology():
 def goto_scrape():
     scraper.scrape_url()
 
+def histogram():
+    image = cv2.imread(location1)
+    h = numpy.zeros((300, 256, 3))
+
+    bins = numpy.arange(256).reshape(256, 1)
+    color = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]
+
+    for ch, col in enumerate(color):
+        hist_item = cv2.calcHist([image], [ch], None, [256], [0, 255])
+        cv2.normalize(hist_item, hist_item, 0, 255, cv2.NORM_MINMAX)
+        hist = numpy.int32(numpy.around(hist_item))
+        pts = numpy.column_stack((bins, hist))
+        cv2.polylines(h, [pts], False, col)
+
+    h = numpy.flipud(h)
+
+    cv2.imshow('colorhist', h)
+
+    cv2.waitKey(0)
+
 
 def gui(metadata_ord, metadata_xml, location, filename):
-
+    global location1
     global textToSave
+
+    location1 = location
     textToSave = "" # if a new image is opened then this will allow its metadata to be saved to file as opposed to the previous one
 
     CMAIN = "#ffffff"  #a5d6a7"
@@ -133,7 +156,7 @@ def gui(metadata_ord, metadata_xml, location, filename):
 
     displaymenu = Menu(menubar, tearoff=0)
     displaymenu.configure(background="#ffffff")
-    displaymenu.add_command(label="Image RGB Histogram", command=usage)
+    displaymenu.add_command(label="Image RGB Histogram", command=histogram)
     menubar.add_cascade(label="Display", menu=displaymenu)
 
     helpmenu = Menu(menubar, tearoff=0)
