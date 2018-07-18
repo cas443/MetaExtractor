@@ -2,6 +2,10 @@ import re
 
 
 def handle_meta(imgdata): #passed in a list of matches that are/should be xml strings
+
+    if imgdata is "":
+        return "No metadata available. Please try another image."
+
     meta_touples = {"": ""}
     dupes = []
     metadata_xml = []

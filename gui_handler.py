@@ -66,13 +66,44 @@ def usage():
     To save the metadata go to File->Save Meta to file... and choose 
     the location and the name you would like to save the data under.
 
-    Under the Filter tab you can choose which type of metadata to display. 
-
     """
     top = Toplevel()
     label = Label(top, text=USAGE_TEXT, heigh=0, width=65)
     label.configure(background="#ffffff")
     label.pack()
+
+def terminology():
+    TEXT_WHAT_IT_IS = """
+    
+                Metadata:
+                
+                Data that is stored within an image that is the image itself.
+                An example would be Exif data which would contain the date and 
+                the timestamp of when the image was taken. Other data such as 
+                camera make and model, geolocation, how the image was edited as
+                well as different tags, copyrights or creators can also be seen
+                although their occurance is rarer.
+                
+                
+
+                Image Histogram:
+
+                An image histogram is a graphical representation of the tonal 
+                distribution in a digital image, It plots the number of pixels 
+                for each tonal value.
+
+                Through the use of image histograms, the viewer can judge the 
+                entire tonal destribution at a glance.
+
+            """
+
+    top = Toplevel()
+    label = Label(top, text=TEXT_WHAT_IT_IS, heigh=0, width=65)
+    label.configure(background="#ffffff")
+
+
+    label.pack()
+
 
 def gui(metadata_ord, metadata_xml, location, filename):
 
@@ -109,10 +140,16 @@ def gui(metadata_ord, metadata_xml, location, filename):
     editmenu.add_command(label="URL", command=crawl)
     menubar.add_cascade(label="Crawl", menu=editmenu)
 
+    displaymenu = Menu(menubar, tearoff=0)
+    displaymenu.configure(background="#ffffff")
+    displaymenu.add_command(label="Image RGB Histogram", command=usage)
+    menubar.add_cascade(label="Display", menu=displaymenu)
+
     helpmenu = Menu(menubar, tearoff=0)
     helpmenu.configure(background="#ffffff")
     helpmenu.add_command(label="About", command=about)
     helpmenu.add_command(label="How to use", command=usage)
+    helpmenu.add_command(label="Terminology", command=terminology)
     menubar.add_cascade(label="Help", menu=helpmenu)
 
     # display the menu

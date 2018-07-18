@@ -1,6 +1,10 @@
 import re
 
 def handle_meta(imgdata):
+
+    if imgdata is "":
+        return "No metadata available. Please try another image."
+
     metadata_regex_ord = r"(?<=\\x[0-9A-Za-z]{2})([A-Za-z0-9 ]{1}[A-Za-z0-9 .:#-/]{3,150})(?=\\x)"
     dupes = []
     metadata_ord = []

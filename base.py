@@ -23,9 +23,7 @@ def start(location):
     filename = re.search(r"(?:.*/)(.*)(?=)", location).group(1)
     print("[+] METADATA FROM FILE: ", filename)
 
-    #default values in cse they are False
-    metadata_ord = []
-    metadata_xml = {"" : ""}
+    #default values in case they are False
     metadata_ord = ord_meta_handler.handle_meta(imgdata)
     metadata_xml = xml_meta_handler.handle_meta(imgdata)
 
