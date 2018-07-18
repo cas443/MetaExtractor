@@ -18,8 +18,7 @@ def openFile():
 
 def saveFile():
     f = filedialog.asksaveasfile(mode='w', defaultextension=".txt", initialfile='METAEX_metadata.txt',)
-    text = textToSave
-    f.write(text)
+    f.write(textToSave)
     f.close()
 
 def crawl():
@@ -107,7 +106,7 @@ def terminology():
 
 def gui(metadata_ord, metadata_xml, location, filename):
 
-    textToSave = ""
+    global textToSave
 
     CMAIN = "#ffffff"  #a5d6a7"
     CDARKER = "#024016" # #1ba1e2
