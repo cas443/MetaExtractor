@@ -6,6 +6,7 @@ from tkinter import messagebox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from PIL import Image, ImageTk
 from tkinter import filedialog
+import scraper
 
 textToSave = ""
 
@@ -20,17 +21,6 @@ def saveFile():
     f = filedialog.asksaveasfile(mode='w', defaultextension=".txt", initialfile='METAEX_metadata.txt',)
     f.write(textToSave)
     f.close()
-
-def crawl():
-    global filter_xml
-    global filter_ord
-
-    filter_xml = True
-    filter_ord = True
-
-
-def hello():
-    print("hello")
 
 def about():
     ABOUT_TEXT = """
@@ -103,16 +93,18 @@ def terminology():
 
     label.pack()
 
+def goto_scrape():
+    scraper.scrape_url()
+
 
 def gui(metadata_ord, metadata_xml, location, filename):
 
     global textToSave
+    textToSave = "" # if a new image is opened then this will allow its metadata to be saved to file as opposed to the previous one
 
     CMAIN = "#ffffff"  #a5d6a7"
     CDARKER = "#024016" # #1ba1e2
     CLOGO="#00695C"
-
-
 
     master = Tk()
     master.title("MetaEx: Image Metadata Extraction Tool")
@@ -136,7 +128,7 @@ def gui(metadata_ord, metadata_xml, location, filename):
     # create more pulldown menus
     editmenu = Menu(menubar, tearoff=0)
     editmenu.configure(background="#ffffff")
-    editmenu.add_command(label="URL", command=crawl)
+    editmenu.add_command(label="URL", command=goto_scrape)
     menubar.add_cascade(label="Crawl", menu=editmenu)
 
     displaymenu = Menu(menubar, tearoff=0)
