@@ -9,7 +9,10 @@ def scrape_url():
     global url
 
     master = Tk()
-    Label(master, text="Scrap URL: ").grid(row=0)
+    master.title("MetaEx: Scrap URL")
+    #master.geometry("280x150")
+    master.geometry("+{}+{}".format(int(master.winfo_screenwidth()/4 - master.winfo_reqwidth()/4), int(master.winfo_screenheight()/2 - master.winfo_reqheight()/2)))
+    Label(master, text="Scrap URL: ").grid(row=0, padx=10, pady=30)
 
     e1 = Entry(master)
     e1.grid(row=0, column=1)
@@ -18,9 +21,7 @@ def scrape_url():
 
     b = Button(master, text='Scrape', command=start)
     b.configure(bg="#1ba1e2", fg="#ffffff")
-
-
-    b.grid(row=3, column=0, sticky="w", pady=4, padx=3)
+    b.grid(row=3, column=0, sticky="s")
 
 
 

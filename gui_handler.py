@@ -13,9 +13,7 @@ textToSave = ""
 location1 = ""
 
 def openFile():
-
     location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")])
-
     base.start(location)
 
 def saveFile():
@@ -133,7 +131,8 @@ def gui(metadata_ord, metadata_xml, location, filename):
     master.title("MetaEx: Image Metadata Extraction Tool")
     master.configure(background=CMAIN)
     master.pack_propagate(0)
-    master.geometry('1120x540')
+    #master.geometry('1120x540')
+    master.geometry("+{}+{}".format(int(100), int(100)))
 
     # ----MENU----
     menubar = Menu(master)

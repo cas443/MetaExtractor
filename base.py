@@ -12,34 +12,34 @@ from tkinter import filedialog
 
 
 def start(location):
-    file = open(location, "rb")
-    imgdata = file.read()
-    file.close()
+    try:
+        file = open(location, "rb")
+        imgdata = file.read()
+        file.close()
 
-    imgdata = str(imgdata)
+        imgdata = str(imgdata)
 
-    # print(imgdata[:50000])
+        # print(imgdata[:50000])
 
-    filename = re.search(r"(?:.*/)(.*)(?=)", location).group(1)
-    print("[+] READING METADATA FROM: ", filename)
+        filename = re.search(r"(?:.*/)(.*)(?=)", location).group(1)
+        print("[+] READING METADATA FROM: ", filename)
 
-    #default values in case they are False
-    metadata_ord = ord_meta_handler.handle_meta(imgdata)
-    metadata_xml = xml_meta_handler.handle_meta(imgdata)
+        # default values in case they are False
+        metadata_ord = ord_meta_handler.handle_meta(imgdata)
+        metadata_xml = xml_meta_handler.handle_meta(imgdata)
 
+        # GUI
+        gui_handler.gui(metadata_ord, metadata_xml, location, filename)
 
-    ###########################################################################################
-    #                                       GUI
-    ###########################################################################################
-
-    gui_handler.gui(metadata_ord, metadata_xml, location, filename)
+    except:
+        print("[-] No valid file given. No worries.")
 
 
 def goto_start():
     # Tk().withdraw() #crates and hides a 'root' lvl window so that the annoying gray window wont be seen
-    # location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")] )
+    location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")] )
 
-    location = "/home/jo/Desktop/MetaImages/basic_maths.jpg"
+    #location = "/home/jo/Desktop/MetaImages/basic_maths.jpg"
     # location = "/home/jo/Desktop/MetaImages/pasta_cooked.jpg"
 
     start(location)
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     master.title("MetaEx: Metadata Extraction Tool")
     master.configure(background="#ffffff" )
     master.pack_propagate(0)
-    master.geometry('400x300')
+    master.geometry("+{}+{}".format(int(master.winfo_screenwidth()/4 - master.winfo_reqwidth()/4), int(master.winfo_screenheight()/2 - master.winfo_reqheight()/2)))
 
     mainframe = Frame(master, width=200, height=450, highlightthickness=0, bg="#ffffff")
     mainframe.grid(row=0, column=0, padx=10, pady=2, sticky=N + S)
