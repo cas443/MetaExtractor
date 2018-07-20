@@ -30,6 +30,8 @@ def scrape_url():
     b.configure(bg="#1ba1e2", fg="#ffffff")
     b.grid(row=3, column=0, sticky="s")
 
+    master.mainloop()
+
 
 def start():
 
@@ -46,27 +48,31 @@ def start():
 
 
 
-    master = Tk()
-    master.title("MetaEx: URL Scraping Results")
-    master.configure(background="#ffffff")
-    master.pack_propagate(0)
-    master.geometry("+{}+{}".format(int(100), int(100)))
-    master.resizable(False, False)
+    # masterScraper = Tk()
+    # masterScraper.title("MetaEx: URL Scraping Results")
+    # masterScraper.configure(background="#ffffff")
+    # masterScraper.pack_propagate(0)
+    # masterScraper.geometry("+{}+{}".format(int(100), int(100)))
+    # masterScraper.resizable(False, False)
+
+    # mainFrame = Frame(masterScraper).grid(row=0, column=0)
 
     i = 0
     for link in soup.find_all('img'):
         #print("\t", link.get('src'))
 
-        scrapedImageName = "scrapedImage" + str(i) + link.get('src') + "\n" # index of link
-        #print(scrapedImageName)
+        scrapedImageName = "scrapedImage " + str(i) + ": "+ link.get('src') # index of link
+        print(scrapedImageName)
+        i+=1
 
-        locals()["panelFrame" + str(i)] = Frame(master, highlightthickness=1, bg="#f333ff")
-        locals()["panelFrame" + str(i)].grid(row=0, column=0, padx=10, pady=2+i*2)
+    #     locals()["panelFrame" + str(i)] = Frame(mainFrame, highlightthickness=1, bg="#f33fff").grid(row=i, column=0, padx=10, pady=10)
+    #
+    #     Label(locals()["panelFrame" + str(i)], text=scrapedImageName, font="Verdana 8", fg="#00695C", bg="#ffffff").grid(row=0, column=0, pady=10)
+    #
+    #
+    #     i += 1
+    #
+    # left = Frame(masterScraper, width=200, height=500, highlightthickness=0, bg="#ffffff")
+    # left.grid(row=0, column=0, padx=10, pady=2, sticky=N + S)
 
-        Label(locals()["panelFrame" + str(i)], text=scrapedImageName, font="Verdana 8", fg="#00695C", bg="#ffffff").grid(row=0, column=0, pady=20+i*2)
-
-
-        i += 1
-
-    left = Frame(master, width=200, height=500, highlightthickness=0, bg="#ffffff")
-    left.grid(row=0, column=0, padx=10, pady=2, sticky=N + S)
+    #masterScraper.mainloop()

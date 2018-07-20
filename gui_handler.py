@@ -1,13 +1,10 @@
-import base
+import base, scraper
+import cv2, numpy
 from tkinter import *
-import tkinter.ttk as ttk
 from tkinter import Tk
-from tkinter import messagebox
-from tkinter.filedialog import askopenfilename, asksaveasfilename
+from tkinter.filedialog import askopenfilename
 from PIL import Image, ImageTk
 from tkinter import filedialog
-import scraper
-import cv2, numpy
 
 textToSave = ""
 location1 = ""
@@ -29,7 +26,7 @@ def about():
 
     This tool has been created as a summer project. Its intended 
     purpose is to educate as to what type of information is 
-    stored ithin image files.
+    stored within image files.
     
     This software comes with no guarantee. Use at your own risk.    
     """
@@ -124,15 +121,13 @@ def gui(metadata_ord, metadata_xml, location, filename):
     textToSave = "" # if a new image is opened then this will allow its metadata to be saved to file as opposed to the previous one
 
     CMAIN = "#ffffff"  #a5d6a7"
-    CDARKER = "#024016" # #1ba1e2
     CLOGO="#00695C"
 
     master = Tk()
-    master.iconbitmap(r'/home/jo/Repos/MetaExtractor/favicon.ico')
+    #master.iconbitmap("/home/jo/Repos/MetaExtractor/favicon.ico")
     master.title("MetaEx: Image Metadata Extraction Tool")
     master.configure(background=CMAIN)
     master.pack_propagate(0)
-    #master.geometry('1120x540')
     master.geometry("+{}+{}".format(int(100), int(100)))
     master.resizable(False, False)
 
@@ -172,44 +167,43 @@ def gui(metadata_ord, metadata_xml, location, filename):
     master.config(menu=menubar)
 
     # ----LEFT----
-    left = Frame(master, width=200, height=500, highlightthickness=0, bg=CMAIN)
+    left = Frame(master, width=150, height=500, highlightthickness=0, bg=CMAIN)
     left.grid(row=0, column=0, padx=10, pady=2, sticky=N + S)
 
     logo = Label(left, text="MetaEx", fg=CLOGO, bg=CMAIN, font="Verdana 30 bold", underline=True)
     logo.grid(row=0, column=0, padx=10, pady=30)
 
     image = Image.open(location)
-    image = image.resize((300, 250), Image.ANTIALIAS)
+    image = image.resize((250, 200), Image.ANTIALIAS)
     imageEx = ImageTk.PhotoImage(image, master=master)
-    Label(left, image=imageEx).grid(row=1, column=0, padx=10, pady=15)
+    Label(left, image=imageEx).grid(row=1, column=0, padx=40, pady=15)
 
-    Label(left, text="Other Information", font="Verdana 11 bold", fg="#00695C", bg=CMAIN, pady=10).grid(row=2, column=0, sticky="nw")
+    #Label(left, text="Other Information", font="Verdana 11 bold", fg="#00695C", bg=CMAIN, pady=10).grid(row=2, column=0, sticky="nw")
 
     extra_information = "Filename: " + filename
-    info = Label(left, text=extra_information, font="Verdana 10 ", bg=CMAIN, fg="#00897B")
-    info.grid(row=3, column=0, sticky="nw")
+    info = Label(left, text=extra_information, font="Verdana 7", bg=CMAIN, fg="#00897B")
+    info.grid(row=3, column=0, sticky="nw", padx=40)
 
     extra_information2 = "Path: " + location[:location.find(filename)]
-    info2 = Label(left, text=extra_information2, font="Verdana 10 ", bg=CMAIN, fg="#00897B")
-    info2.grid(row=4, column=0, sticky="nw")
+    info2 = Label(left, text=extra_information2, font="Verdana 7", bg=CMAIN, fg="#00897B")
+    info2.grid(row=4, column=0, sticky="nw", padx=40)
 
     # ----MIDDLE----
     # separator = ttk.Separator(master, orient="vertical")
     # separator.grid(row=0, column=1, sticky="sn", rowspan=2)
 
     # ----RIGHT----
-    right = Frame(master, bg=CMAIN, highlightthickness=0, highlightbackground=CMAIN, width=500, height=500)
-    right.grid(row=0, column=2, padx=50, pady=2, sticky="ns")
+    right = Frame(master, bg=CMAIN, highlightthickness=0, highlightbackground=CMAIN)
+    right.grid(row=0, column=2, padx=0, pady=0)
 
-    intro = Label(right, text="Image Metadata", fg="#ffffff", bg="#1ba1e2", font="Verdana 10 bold", height=2, width=70)
-    intro.grid(row=0, column=0, padx=10, pady=20)
+    intro = Label(right, text="Image Metadata", fg="#ffffff", bg="#1ba1e2", font="Verdana 10 bold", height=2, width=57)
+    intro.grid(row=0, column=0, padx=0, pady=20)
 
 
+    table = Frame(right, bg=CMAIN, highlightthickness=0, highlightbackground=CMAIN)
+    table.grid(row=1, column=0, padx=(10, 40), pady=(0, 40), sticky="ns")
 
-    table = Frame(right, bg=CMAIN, highlightthickness=0, highlightbackground=CMAIN, width=500, height=400)
-    table.grid(row=1, column=0, padx=10, pady=0, sticky="ns")
-
-    canvas = Canvas(table, width=600, height=440, background=CMAIN, highlightbackground=CMAIN)
+    canvas = Canvas(table, width=500, height=350, background=CMAIN, highlightbackground=CMAIN)
     scrolly = Scrollbar(table, orient='vertical', command=canvas.yview)
 
     i = 0

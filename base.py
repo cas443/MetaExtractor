@@ -12,27 +12,27 @@ from tkinter import filedialog
 
 
 def start(location):
-    try:
-        file = open(location, "rb")
-        imgdata = file.read()
-        file.close()
+    #try:
+    file = open(location, "rb")
+    imgdata = file.read()
+    file.close()
 
-        imgdata = str(imgdata)
+    imgdata = str(imgdata)
 
-        # print(imgdata[:50000])
+    # print(imgdata[:50000])
 
-        filename = re.search(r"(?:.*/)(.*)(?=)", location).group(1)
-        print("[+] READING METADATA FROM: ", filename)
+    filename = re.search(r"(?:.*/)(.*)(?=)", location).group(1)
+    print("[+] READING METADATA FROM: ", filename)
 
-        # default values in case they are False
-        metadata_ord = ord_meta_handler.handle_meta(imgdata)
-        metadata_xml = xml_meta_handler.handle_meta(imgdata)
+    # default values in case they are False
+    metadata_ord = ord_meta_handler.handle_meta(imgdata)
+    metadata_xml = xml_meta_handler.handle_meta(imgdata)
 
-        # GUI
-        gui_handler.gui(metadata_ord, metadata_xml, location, filename)
+    # GUI
+    gui_handler.gui(metadata_ord, metadata_xml, location, filename)
 
-    except:
-        print("[-] No valid file given. No worries.")
+    #except:
+    #    print("[-] No valid file given. No worries.")
 
 
 def goto_start():
