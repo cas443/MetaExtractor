@@ -128,11 +128,14 @@ def gui(metadata_ord, metadata_xml, location, filename):
     CLOGO="#00695C"
 
     master = Tk()
+    master.iconbitmap(r'/home/jo/Repos/MetaExtractor/favicon.ico')
     master.title("MetaEx: Image Metadata Extraction Tool")
     master.configure(background=CMAIN)
     master.pack_propagate(0)
     #master.geometry('1120x540')
     master.geometry("+{}+{}".format(int(100), int(100)))
+    master.resizable(False, False)
+
 
     # ----MENU----
     menubar = Menu(master)
@@ -186,7 +189,7 @@ def gui(metadata_ord, metadata_xml, location, filename):
     info = Label(left, text=extra_information, font="Verdana 10 ", bg=CMAIN, fg="#00897B")
     info.grid(row=3, column=0, sticky="nw")
 
-    extra_information2 = "Path: " + location
+    extra_information2 = "Path: " + location[:location.find(filename)]
     info2 = Label(left, text=extra_information2, font="Verdana 10 ", bg=CMAIN, fg="#00897B")
     info2.grid(row=4, column=0, sticky="nw")
 
