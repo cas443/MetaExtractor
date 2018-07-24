@@ -178,8 +178,6 @@ def gui(metadata_ord, metadata_xml, location, filename):
     imageEx = ImageTk.PhotoImage(image, master=master)
     Label(left, image=imageEx).grid(row=1, column=0, padx=40, pady=15)
 
-    #Label(left, text="Other Information", font="Verdana 11 bold", fg="#00695C", bg=CMAIN, pady=10).grid(row=2, column=0, sticky="nw")
-
     extra_information = "Filename: " + filename
     info = Label(left, text=extra_information, font="Verdana 7", bg=CMAIN, fg="#00897B")
     info.grid(row=3, column=0, sticky="nw", padx=40)

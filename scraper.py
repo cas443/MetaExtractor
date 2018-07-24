@@ -37,6 +37,8 @@ def start():
 
     global url
 
+    scrapedImagesList = ""
+
     #r = requests.get("http://halsey.wikia.com/wiki/Ghost")
     print("[+] Scraping images from: ", url, "\n")
     #r = requests.get(str(url))
@@ -59,11 +61,15 @@ def start():
 
     i = 0
     for link in soup.find_all('img'):
-        #print("\t", link.get('src'))
 
+        scrapedImagesList += link.get('src') + "\n"
         scrapedImageName = "scrapedImage " + str(i) + ": "+ link.get('src') # index of link
         print(scrapedImageName)
         i+=1
+
+
+    master = Tk()
+    Label(master, text=scrapedImagesList, cursor="hand2")
 
     #     locals()["panelFrame" + str(i)] = Frame(mainFrame, highlightthickness=1, bg="#f33fff").grid(row=i, column=0, padx=10, pady=10)
     #
