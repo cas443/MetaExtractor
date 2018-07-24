@@ -197,7 +197,6 @@ def gui(metadata_ord, metadata_xml, location, filename):
     intro = Label(right, text="Image Metadata", fg="#ffffff", bg="#1ba1e2", font="Verdana 10 bold", height=2, width=57)
     intro.grid(row=0, column=0, padx=0, pady=20)
 
-
     table = Frame(right, bg=CMAIN, highlightthickness=0, highlightbackground=CMAIN)
     table.grid(row=1, column=0, padx=(10, 40), pady=(0, 40), sticky="ns")
 
@@ -208,7 +207,6 @@ def gui(metadata_ord, metadata_xml, location, filename):
     for key, value in metadata_xml.items():
         if "0" not in value and "http" not in value:
             l = len(key)
-            tab = ""
             if l < 9:
                 tab = "\t\t\t"
             elif l < 20:

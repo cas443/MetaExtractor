@@ -6,7 +6,7 @@ def handle_meta(imgdata): #passed in a list of matches that are/should be xml st
     if imgdata is "":
         return "No metadata available. Please try another image."
 
-    meta_touples = {"": ""}
+    meta_touples = {"":""}
     dupes = []
     metadata_xml = []
 
@@ -19,7 +19,7 @@ def handle_meta(imgdata): #passed in a list of matches that are/should be xml st
         parser_regex = r"(?::)(\w+)(?:=\")(.*?)(?=\")" # dictionary
 
         between_tags = r"(?:>)(\w+.*?)(?:<)"
-        lat_long_regex = r"(?:exif:)([A-Za-z0-9]+)(?:>.*?)([0-9. ]+[A-Z]+)(?:</)"
+        exif_tags_regex = r"(?:exif:)([A-Za-z0-9]+)(?:>)(.*?)(?:<)"
         gps_timestamp_regex = r"(?:exif:)([A-Za-z0-9]+)(?:>)([0-9. :]+)(?:</)"
 
         for j in re.findall(parser_regex, i):
@@ -27,7 +27,7 @@ def handle_meta(imgdata): #passed in a list of matches that are/should be xml st
                 meta_touples.update({j[0]:j[1]})
                 dupes.append(j)
 
-        for j in re.findall(lat_long_regex, i):
+        for j in re.findall(exif_tags_regex, i):
             if j not in dupes:
                 meta_touples.update({j[0]: j[1]})
                 dupes.append(j)

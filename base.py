@@ -19,7 +19,7 @@ def start(location):
 
     imgdata = str(imgdata)
 
-    # print(imgdata[:50000])
+    print(imgdata[:90000])
 
     filename = re.search(r"(?:.*/)(.*)(?=)", location).group(1)
     print("[+] READING METADATA FROM: ", filename)
