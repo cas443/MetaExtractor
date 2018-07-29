@@ -1,4 +1,4 @@
-import xml_meta_handler, ord_meta_handler
+import meta_handler
 import gui_handler, scraper
 
 import re, os
@@ -19,14 +19,16 @@ def start(location):
 
     imgdata = str(imgdata)
 
-    print(imgdata[:90000])
+    #print(imgdata[:90000])
 
     filename = re.search(r"(?:.*/)(.*)(?=)", location).group(1)
     print("[+] READING METADATA FROM: ", filename)
 
     # default values in case they are False
-    metadata_ord = ord_meta_handler.handle_meta(imgdata)
-    metadata_xml = xml_meta_handler.handle_meta(imgdata)
+    # metadata_ord = ord_meta_handler.handle_meta(imgdata)
+    # metadata_xml = xml_meta_handler.handle_meta(imgdata)
+
+    metadata_xml, metadata_ord = meta_handler.handle_meta(imgdata)
 
     # GUI
     gui_handler.gui(metadata_ord, metadata_xml, location, filename)
