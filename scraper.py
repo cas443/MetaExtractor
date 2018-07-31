@@ -83,7 +83,21 @@ def start():
 
 
     master = Tk()
-    Label(master, text=scrapedImagesList, cursor="hand2")
+
+    extractionOutputFrame = Frame(master, bg="#ffffff")
+    extractionOutputFrame.grid(row=0, column=0)
+
+    ot = "Images extracted from: " + url[:30]
+    originText = Label(extractionOutputFrame, text=ot, bg="#ffffff")
+    originText.grid(row=1, column=0, pady=(5,5))
+
+    sl = "Following images have been saved at: " + "/home/jo/Desktop/ScrapedImages"
+    savedLocation = Label(extractionOutputFrame, text=sl, bg="#ffffff")
+    savedLocation.grid(row=2, column=0, pady=(5,3))
+
+    outputData = Label(extractionOutputFrame, text=scrapedImagesList, cursor="hand2", bg="#ffffff", font="Verdana 5")
+    outputData.grid(row=3, column=0, padx=(2,0), pady=(5,2))
+
 
 
 

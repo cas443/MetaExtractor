@@ -230,6 +230,11 @@ def gui(metadata_ord, metadata_xml, location, filename):
         textToSave += j + "\n"
         i += 1
 
+    print("TEXT2SAVE: " + textToSave )
+
+    if textToSave is " ":
+        textToSave = "There is no Metadata available for this image."
+
     canvas.configure(scrollregion=canvas.bbox('all'), yscrollcommand=scrolly.set, background=CMAIN)
     # canvas.config(width=600, height=440)
     canvas.pack(fill='both', expand=True, side='left')
