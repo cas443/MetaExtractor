@@ -3,6 +3,7 @@ import requests
 import urllib.request
 import datetime
 import os
+import webbrowser
 from tkinter import *
 
 url = ""
@@ -97,6 +98,12 @@ def start():
 
     outputData = Label(extractionOutputFrame, text=scrapedImagesList, cursor="hand2", bg="#ffffff", font="Verdana 5")
     outputData.grid(row=3, column=0, padx=(2,0), pady=(5,2))
+
+    try:
+        webbrowser.open("/home/jo/Desktop/ScrapedImages", 2)
+    except:
+        pass
+
 
 
 
