@@ -230,10 +230,13 @@ def gui(metadata_ord, metadata_xml, location, filename):
         textToSave += j + "\n"
         i += 1
 
-    print("TEXT2SAVE: " + textToSave )
+    print("TEXT2SAVE: " + str(len(textToSave)) )
 
-    if textToSave is " ":
+    if "a" not in textToSave or "e" not in textToSave or "i" not in textToSave or "o" not in textToSave or "u" not in textToSave:
         textToSave = "There is no Metadata available for this image."
+        label = Label(canvas, text=textToSave)
+        canvas.create_window(0, 22, anchor='nw', window=label, height=15)
+        label.configure(background=CMAIN)
 
     canvas.configure(scrollregion=canvas.bbox('all'), yscrollcommand=scrolly.set, background=CMAIN)
     # canvas.config(width=600, height=440)

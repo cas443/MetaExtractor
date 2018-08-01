@@ -78,8 +78,11 @@ def start():
             #print("[ERR] The url scraped may not be a proper url but an extenrion to the address provided...")
 
         filename = datetime.datetime.today().strftime('%d%m%Y') + "_" + str(i) + ".jpg"
-        with open(os.path.join("/home/jo/Desktop/ScrapedImages", filename), "wb") as f:
-            f.write(requests.get(link.get('src')).content)
+        try:
+            with open(os.path.join("/home/jo/Desktop/ScrapedImages", filename), "wb") as f:
+                f.write(requests.get(link.get('src')).content)
+        except:
+            pass
         i+=1
 
 
