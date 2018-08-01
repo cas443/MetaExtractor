@@ -1,5 +1,4 @@
 import base, scraper
-import cv2, numpy
 from tkinter import *
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
@@ -92,27 +91,6 @@ def terminology():
 def goto_scrape():
     scraper.scrape_url()
 
-def histogram():
-    image = cv2.imread(location1)
-    h = numpy.zeros((300, 256, 3))
-
-    bins = numpy.arange(256).reshape(256, 1)
-    color = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]
-
-    for ch, col in enumerate(color):
-        hist_item = cv2.calcHist([image], [ch], None, [256], [0, 255])
-        cv2.normalize(hist_item, hist_item, 0, 255, cv2.NORM_MINMAX)
-        hist = numpy.int32(numpy.around(hist_item))
-        pts = numpy.column_stack((bins, hist))
-        cv2.polylines(h, [pts], False, col)
-
-    h = numpy.flipud(h)
-
-    cv2.imshow('colorhist', h)
-
-    cv2.waitKey(0)
-
-
 def gui(metadata_ord, metadata_xml, location, filename):
     global location1
     global textToSave
@@ -150,11 +128,6 @@ def gui(metadata_ord, metadata_xml, location, filename):
     editmenu.configure(background="#ffffff")
     editmenu.add_command(label="URL", command=goto_scrape)
     menubar.add_cascade(label="Crawl", menu=editmenu)
-
-    displaymenu = Menu(menubar, tearoff=0)
-    displaymenu.configure(background="#ffffff")
-    displaymenu.add_command(label="Image RGB Histogram", command=histogram)
-    menubar.add_cascade(label="Display", menu=displaymenu)
 
     helpmenu = Menu(menubar, tearoff=0)
     helpmenu.configure(background="#ffffff")

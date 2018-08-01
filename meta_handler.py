@@ -7,12 +7,9 @@ def handle_meta(imgdata):
 
     print("[i] Length of image data BEFORE reduction: {}".format(len(imgdata)))
 
-    #imgdata = re.sub(r"(?<=\\)(x[0-9A-Za-z]{2,5}\\)","", imgdata)
     imgdata = re.sub(r"(?<=\\)(x[0-9A-Za-z().*|\\^\"@+=\-/\[\]:;<>$&!?`#{}~ ]{2,6}\\)","", imgdata)
 
     print("[i] Length of image data AFTER reduction: {}".format(len(imgdata)))
-    #print(imgdata[:20000])
-
 
     extraction_regexes_XML = [
                r"(?::)(\w+)(?:=\")(.*?)(?=\")",
@@ -37,27 +34,17 @@ def handle_meta(imgdata):
                 duplicates.append(j[0])
                 duplicates.append(j[1])
 
-
     for i in extraction_regexes_ORD:
 
         curr = re.findall(i, imgdata)
 
-        print("CURR: {}".format(curr))
-
         for j in curr:
 
-            print("J: {}".format(j))
-
             match = re.search(r"([A-Za-z0-9 .:/-]{5,150})", i)
-
-            print("MATCH: {}".format(match))
 
             if j not in duplicates and len(j) > 7  and "   " not in j and "bool" not in match.group(0) and not any(k in unwanted_ORD_chars for k in j):
                 meta_matches_ORD_LIST.append(j)
                 duplicates.append(j)
-
-    #meta_matches_ORD_LIST.sort(key=len, reverse=True)
-
 
     print("Length of meta_matches_XML: {}".format(len(meta_matches_XML_DICT)))
     print("Length of meta_matches_ORD: {}".format(len(meta_matches_ORD_LIST)))
