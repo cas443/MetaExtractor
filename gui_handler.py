@@ -37,19 +37,35 @@ def about():
 
 def usage():
     USAGE_TEXT = """
-
-    How to use
-
-
+    
+    OPEN NEW:
+    
     Go to File->Open New... and choose the image you want to extract 
     metadata for.
 
     The data should appear in the "Image Metadata" box in the main 
     window.
-
+    
+    
+    SAVE CURRENT METADATA TO FILE:
+    
     To save the metadata go to File->Save Meta to file... and choose 
     the location and the name you would like to save the data under.
-
+    
+    
+    SCRAPING:
+    
+    In order to scrape either:
+    a) as soon as the program starts press the "Scrape by Webpage" button or
+    b) in the navigation bar go to Scrape> By URL
+    
+    place the URL you're interested in into the text area and 
+    press the "Scrape" button. A new window should appear detailing 
+    the image URLs that were found on the URL te user psses in.
+    A secondary window should also open to the folder where the 
+    images have been downloaded into. 
+    
+    
     """
     top = Toplevel()
     label = Label(top, text=USAGE_TEXT, heigh=0, width=65)
@@ -69,15 +85,14 @@ def terminology():
                 although their occurance is rarer.
                 
                 
-
-                Image Histogram:
-
-                An image histogram is a graphical representation of the tonal 
-                distribution in a digital image, It plots the number of pixels 
-                for each tonal value.
-
-                Through the use of image histograms, the viewer can judge the 
-                entire tonal destribution at a glance.
+                Image Scraping:
+                
+                Scraping is the extraction of data from a source without having 
+                direct access to it. In this case the URL (Uniform Resource Locator)
+                is provided by the user and all the images that are contained
+                on the site pointed at are being downloaded onto users machine.
+                
+                 
 
             """
 
@@ -126,8 +141,8 @@ def gui(metadata_ord, metadata_xml, location, filename):
     # create more pulldown menus
     editmenu = Menu(menubar, tearoff=0)
     editmenu.configure(background="#ffffff")
-    editmenu.add_command(label="URL", command=goto_scrape)
-    menubar.add_cascade(label="Crawl", menu=editmenu)
+    editmenu.add_command(label="By URL", command=goto_scrape)
+    menubar.add_cascade(label="Scrape", menu=editmenu)
 
     helpmenu = Menu(menubar, tearoff=0)
     helpmenu.configure(background="#ffffff")
@@ -149,7 +164,9 @@ def gui(metadata_ord, metadata_xml, location, filename):
     image = Image.open(location)
     image = image.resize((250, 200), Image.ANTIALIAS)
     imageEx = ImageTk.PhotoImage(image, master=master)
-    Label(left, image=imageEx).grid(row=1, column=0, padx=40, pady=15)
+
+    i = Label(left, image=imageEx)
+    i.grid(row=1, column=0, padx=40, pady=15)
 
     extra_information = "Filename: " + filename
     info = Label(left, text=extra_information, font="Verdana 7", bg=CMAIN, fg="#00897B")
@@ -203,7 +220,6 @@ def gui(metadata_ord, metadata_xml, location, filename):
         textToSave += j + "\n"
         i += 1
 
-    print("TEXT2SAVE: " + str(len(textToSave)) )
 
     if "a" not in textToSave or "e" not in textToSave or "i" not in textToSave or "o" not in textToSave or "u" not in textToSave:
         textToSave = "There is no Metadata available for this image."
