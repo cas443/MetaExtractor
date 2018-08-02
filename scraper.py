@@ -64,6 +64,7 @@ def start():
 
 
     master = Tk()
+    master.title("MataEx")
 
     extractionOutputFrame = Frame(master, bg="#ffffff")
     extractionOutputFrame.grid(row=0, column=0)
@@ -72,7 +73,13 @@ def start():
     originText = Label(extractionOutputFrame, text=ot, bg="#ffffff")
     originText.grid(row=1, column=0, pady=(5,5))
 
-    sl = "Following images have been saved at: " + "/home/jo/Desktop/ScrapedImages"
+    if os.path.exists("/home/jo/Desktop/ScrapedImages"):
+        directoryPath =  "/home/jo/Desktop/ScrapedImages"
+    else:
+        os.makedirs("/home/jo/Desktop/ScrapedImages")
+        directoryPath = "/home/jo/Desktop/ScrapedImages"
+
+    sl = "Following images have been saved at: " + directoryPath
     savedLocation = Label(extractionOutputFrame, text=sl, bg="#ffffff")
     savedLocation.grid(row=2, column=0, pady=(5,3))
 
