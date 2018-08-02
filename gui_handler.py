@@ -1,4 +1,5 @@
 import base, scraper
+import os
 from tkinter import *
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
@@ -9,7 +10,7 @@ textToSave = ""
 location1 = ""
 
 def openFile():
-    location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")])
+    location = askopenfilename( initialdir="/home/jo/Desktop", title="Select image for metadata extraction", filetypes=(("Image Files", "*.jpg"), ("Image Files", "*.png")) )
     base.start(location)
 
 def saveFile():

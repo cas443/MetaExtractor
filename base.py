@@ -32,10 +32,7 @@ def start(location):
 
 
 def goto_start():
-    location = askopenfilename(title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")] )
-
-    #location = "/home/jo/Desktop/MetaImages/basic_maths.jpg"
-
+    location = askopenfilename(initialdir="/home/jo/Desktop", title="Select image for metadata extraction", filetypes=[("Image Files", "*.jpg"), ("Image Files", "*.png")] )
     start(location)
 
 
