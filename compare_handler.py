@@ -27,8 +27,6 @@ def compare_meta():
         print("[ERR] An error has occured when reading in compare images.")
         pass
 
-    filename1 = re.search(r"(?:.*/)(.*)(?=)", imgdata1).group(1)
-    filename2 = re.search(r"(?:.*/)(.*)(?=)", imgdata2).group(1)
     print("[+] COMPARING IMAGES AT: {} AND {}".format(image1, image2))
 
     metadata_xml1, metadata_ord1 = meta_handler.handle_meta(imgdata1)
@@ -49,18 +47,26 @@ def compare_meta():
 
     print("\n")
     for i in range(len(metadata_ord1)):
-        if metadata_ord1[i]== metadata_ord2[i]:
-            print("\t" + metadata_ord1[i])
-            commonMeta += metadata_ord1[i] + "\n"
+        try:
+            if metadata_ord1[i]== metadata_ord2[i]:
+                print("\t" + metadata_ord1[i])
+                commonMeta += metadata_ord1[i] + "\n"
+        except:
+            continue
+
+    if commonMeta == "":
+        commonMeta = "There is no common metadata to these 2 images."
 
 
     tk = tkinter.Tk()
+    tk.configure(background="#ffffff")
+    tk.title("MetaEx: Image Metadata Extraction Tool")
 
-    frame1 = tkinter.Frame(master=tk)
+    frame1 = tkinter.Frame(master=tk, bg="#ffffff")
     frame1.grid(row=0, column=0)
 
-    lable1 = tkinter.Label(frame1, text="Common Metadata between the 2 chosen files", bg="#ffffff")
-    lable1.grid(row=0, column=0)
+    lable1 = tkinter.Label(frame1, text="Common Metadata between the 2 chosen files", fg="#ffffff", bg="#1ba1e2", font="Verdana 12 bold", height=2, width=57)
+    lable1.grid(row=0, column=0, pady=10)
 
     textbox1 = tkinter.Text(frame1, bg="#ffffff", height=35, width=110)
     textbox1.insert(INSERT, commonMeta)
