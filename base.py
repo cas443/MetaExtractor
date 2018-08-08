@@ -1,5 +1,6 @@
 import meta_handler
 import gui_handler, scraper
+import compare_handler
 
 import re, os
 from tkinter import *
@@ -57,8 +58,11 @@ if __name__ == "__main__":
     b2 = Button(mainframe, text="Scrape a Webpage", command=scraper.scrape_url)
     b2.grid(row=2, column=0, padx=100, pady=10)
 
-    b3 = Button(mainframe, text="Exit", command=master.quit)
+    b3 = Button(mainframe, text="Compare Metadata of 2 images", command=compare_handler.compare_meta)
     b3.grid(row=3, column=0, padx=100, pady=10)
+
+    b4 = Button(mainframe, text="Exit", command=master.quit)
+    b4.grid(row=4, column=0, padx=100, pady=10)
 
     footer = Frame(master, width=200, height=50, highlightthickness=0, bg="#fff3ff")
     footer.grid(row=1, column=0, padx=10, pady=2, sticky=N + S)

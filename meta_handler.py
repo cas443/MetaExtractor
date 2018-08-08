@@ -29,7 +29,7 @@ def handle_meta(imgdata):
         curr = re.findall(i, imgdata)
 
         for j in curr:
-            if j not in duplicates and type(j) is tuple and j[1] is not "" and "\n" not in j and len(j[0]) < 100 and len(j[1]) < 150 and "\\x" not in j[0] and "\\x" not in j[1]:
+            if j not in duplicates and type(j) is tuple and j[1] is not "" and "\n" not in j and len(j[0]) < 100 and len(j[1]) < 150 and "\\x" not in j[0] and "\\x" not in j[1] and "li>" not in j[0] :
                 meta_matches_XML_DICT.update({j[0] : j[1]})
                 duplicates.append(j[0])
                 duplicates.append(j[1])
