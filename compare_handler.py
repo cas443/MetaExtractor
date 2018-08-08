@@ -1,5 +1,6 @@
 from tkinter.filedialog import askopenfilename
 import tkinter
+from tkinter import *
 import meta_handler
 import re
 
@@ -61,7 +62,8 @@ def compare_meta():
     lable1 = tkinter.Label(frame1, text="Common Metadata between the 2 chosen files", bg="#ffffff")
     lable1.grid(row=0, column=0)
 
-    textbox1 = tkinter.Label(frame1, text=commonMeta, bg="#ffffff")
+    textbox1 = tkinter.Text(frame1, bg="#ffffff", height=35, width=110)
+    textbox1.insert(INSERT, commonMeta)
     textbox1.grid(row=1, column=0)
 
 
